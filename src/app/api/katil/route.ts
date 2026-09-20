@@ -15,7 +15,6 @@ export async function POST(request: Request) {
       !data.eposta ||
       !data.alanlar ||
       data.alanlar.length === 0 ||
-      !data.deneyim ||
       !data.aktifGorev
     ) {
       return NextResponse.json(
@@ -34,7 +33,7 @@ export async function POST(request: Request) {
       eposta: String(data.eposta).trim(),
       alanlar: Array.isArray(data.alanlar) ? data.alanlar : [data.alanlar],
       digerAlan: data.digerAlan ? String(data.digerAlan).trim() : null,
-      deneyim: String(data.deneyim).trim(),
+      deneyim: data.deneyim ? String(data.deneyim).trim() : 'Belirtilmedi',
       teknolojiler: data.teknolojiler ? String(data.teknolojiler).trim() : null,
       aktifGorev: String(data.aktifGorev).trim(),
       eklemekIstedikleriniz: data.eklemekIstedikleriniz ? String(data.eklemekIstedikleriniz).trim() : null,

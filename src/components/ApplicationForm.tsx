@@ -36,14 +36,6 @@ const ALANLAR_OPTIONS = [
   'Diğer',
 ];
 
-const DENEYIM_OPTIONS = [
-  { id: 'none', label: 'Hiç olmadı', desc: 'Sıfırdan öğrenmek ve kendimi geliştirmek istiyorum.' },
-  { id: 'basic', label: 'Biraz bilgim var', desc: 'Temel kavramlara ve araçlara aşinayım.' },
-  { id: 'self', label: 'Kendi kendime çalışmalar yaptım', desc: 'Bireysel denemeler, kurslar ve küçük projeler yaptım.' },
-  { id: 'projects', label: 'Projelerde görev aldım', desc: 'Topluluk veya okul projelerinde aktif rol aldım.' },
-  { id: 'competitions', label: 'Yarışma / TEKNOFEST deneyimim var', desc: 'Daha önce yarışmalarda takım tecrübesi edindim.' },
-];
-
 const AKTIF_GOREV_OPTIONS = [
   { id: 'yes', label: 'Evet', desc: 'Takım çalışmalarında aktif olarak yer almak ve sorumluluk üstlenmek istiyorum.' },
   { id: 'after_meeting', label: 'Ekipleri tanıdıktan sonra karar vermek istiyorum', desc: 'Toplantı ve tanışma süreçlerinden sonra netleştirmek isterim.' },
@@ -134,10 +126,6 @@ export default function ApplicationForm() {
       setErrorMessage('Lütfen "Diğer" seçeneği için ilgilendiğiniz alanı yazınız.');
       return;
     }
-    if (!formData.deneyim) {
-      setErrorMessage('Lütfen bu alanlardaki deneyim durumunuzu seçiniz.');
-      return;
-    }
     if (!formData.aktifGorev) {
       setErrorMessage('Lütfen takımda aktif görev alma durumunuzu seçiniz.');
       return;
@@ -188,7 +176,7 @@ export default function ApplicationForm() {
           </span>
 
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F2F6FA] tracking-tight text-center">
-            Aday Havuzumuza Hoş Geldin, {formData.adSoyad.split(' ')[0]}! 🚀
+            Aday Havuzumuza Hoş Geldin, {formData.adSoyad.split(' ')[0]}!
           </h3>
 
           <p className="text-sm sm:text-base md:text-lg text-[#A8B4C2] leading-relaxed max-w-xl font-normal text-center">
@@ -251,7 +239,7 @@ export default function ApplicationForm() {
 
         <p className="text-sm sm:text-base md:text-lg text-[#A8B4C2] leading-relaxed max-w-2xl font-normal">
           TEKNOFEST projelerimizde yer almak, yeni teknolojiler öğrenmek ve takımımızla birlikte proje geliştirmek ister misin?
-          Formu doldurarak aday havuzumuza katılabilirsin. <span className="text-[#6CC4FF] font-semibold">Deneyim şart değil! 🚀</span>
+          Formu doldurarak aday havuzumuza katılabilirsin. <span className="text-[#6CC4FF] font-semibold">Deneyim şart değil!</span>
         </p>
       </div>
 
@@ -430,43 +418,21 @@ export default function ApplicationForm() {
           </div>
 
           {/* Bu Alanlarda Daha Önce Deneyimin Oldu mu? */}
-          <div className="space-y-3 pt-2">
-            <div>
-              <label className="text-sm sm:text-base font-semibold text-[#F2F6FA] block">
-                Bu alanlarda daha önce bir deneyimin oldu mu? <span className="text-[#42A5F5]">*</span>
-              </label>
-              <p className="text-xs text-[#A8B4C2] mt-0.5 font-normal">
-                Durumunu en iyi yansıtan seçeneği işaretle. (Deneyim şart değildir)
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              {DENEYIM_OPTIONS.map((item) => {
-                const isSelected = formData.deneyim === item.label;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, deneyim: item.label })}
-                    className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all min-h-[52px] ${
-                      isSelected
-                        ? 'bg-[#42A5F5]/15 border-[#42A5F5] text-[#F2F6FA] ring-1 ring-[#42A5F5]/40'
-                        : 'bg-[#07111C] border-[#1B3A52] text-[#A8B4C2] hover:text-[#F2F6FA] hover:border-[#42A5F5]/40'
-                    }`}
-                  >
-                    <span className={`h-4 w-4 rounded-full border mt-0.5 shrink-0 flex items-center justify-center ${
-                      isSelected ? 'border-[#42A5F5] bg-[#42A5F5]' : 'border-[#1B3A52] bg-[#0B1826]'
-                    }`}>
-                      {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#07111C]" />}
-                    </span>
-                    <div className="space-y-0.5">
-                      <span className="text-xs sm:text-sm font-semibold block text-[#F2F6FA]">{item.label}</span>
-                      <span className="text-[11px] sm:text-xs text-[#A8B4C2] block leading-relaxed">{item.desc}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+          <div className="space-y-2 pt-2">
+            <label className="text-sm font-semibold text-[#F2F6FA] flex items-center justify-between">
+              <span>Bu alanlarda daha önce bir deneyimin oldu mu?</span>
+              <span className="text-xs text-[#A8B4C2] font-mono">Kısa yanıt</span>
+            </label>
+            <p className="text-xs text-[#A8B4C2] font-normal">
+              Daha önce aldığın dersler, bireysel çalışmaların, okul/topluluk projeleri veya yarışma tecrübelerinden kısaca bahsedebilirsin. (Deneyim şart değildir)
+            </p>
+            <textarea
+              rows={3}
+              placeholder="Örn: Ders ve okul projelerinde yer aldım / Bireysel olarak çalıştım / Henüz deneyimim yok ama öğrenmeye hevesliyim..."
+              value={formData.deneyim}
+              onChange={(e) => setFormData({ ...formData, deneyim: e.target.value })}
+              className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base resize-y min-h-[88px]"
+            />
           </div>
 
           {/* Varsa Bildiğin Teknolojiler / Programlar */}
