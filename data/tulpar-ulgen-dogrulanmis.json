@@ -1,0 +1,81 @@
+{
+  "takim": {
+    "ad": "Tulpar Ülgen",
+    "okul": "Gazi Üniversitesi",
+    "fakulte": "Teknoloji Fakültesi",
+    "bolum": "Bilgisayar Mühendisliği",
+    "sezon": "2026",
+    "kategori": null,
+    "slogan": null,
+    "logoPath": "/images/tulpar-logo.png"
+  },
+  "hero": {
+    "gorsel": null
+  },
+  "metrikler": null,
+  "proje": {
+    "ad": null,
+    "ozet": null,
+    "problem": null,
+    "cozum": null,
+    "teknikOzellikler": [],
+    "teknolojiler": [],
+    "galeri": []
+  },
+  "yolHaritasi": [],
+  "ekip": {
+    "durum": "TEYİT EDİLMELİ",
+    "danisman": null,
+    "kaptan": null,
+    "uyeler": [
+      "Rıza Yurtseven",
+      "Berkay Köklü",
+      "Fuat Efe Özdemir",
+      "Mertcan Hırlak",
+      "Zeynep Başaran",
+      "Mehmet Fatih Ekici",
+      "Sude Özbay",
+      "Kübra Topcu",
+      "Beiza Achmet",
+      "Adem Halit Karagöz",
+      "Zeynep Baykan",
+      "Batuhan Bozkaya",
+      "Esra Karakaş",
+      "Azranur Yanık",
+      "Eylül Dilsiz"
+    ]
+  },
+  "galeri": [],
+  "gelismeler": [],
+  "sponsorluk": {
+    "paketler": [],
+    "mevcutSponsorlar": [],
+    "dosyaYolu": null,
+    "nedenSponsor": []
+  },
+  "iletisim": {
+    "eposta": null,
+    "telefon": null,
+    "whatsapp": null,
+    "konum": null,
+    "linkedin": "https://www.linkedin.com/company/tulpar-ulgen",
+    "instagram": null,
+    "youtube": null,
+    "github": null
+  },
+  "paydaslar": [
+    {
+      "id": "gazi",
+      "ad": "Gazi Üniversitesi",
+      "logo": "/images/gazi-universitesi-logo.png",
+      "url": "https://gazi.edu.tr"
+    },
+    {
+      "id": "yagi",
+      "ad": "Gazi YAGİ",
+      "altAd": "Yazılım Araştırma ve Geliştirme Topluluğu",
+      "logo": "/images/yage-logo.png",
+      "url": "https://yagi.gazi.edu.tr"
+    }
+  ]
+}
