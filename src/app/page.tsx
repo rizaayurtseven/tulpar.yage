@@ -89,32 +89,42 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* 2 Yarışma Kartı: Tulpar Ülgen & Tulpar Payna */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          {yarismalar.map((proje) => {
+        {/* 2 Yarışma: Tulpar Ülgen & Tulpar Payna (Kutucuksuz, direkt yazı ve aralarında ince ayrım çizgisi) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-0 pt-2">
+          {yarismalar.map((proje, index) => {
             const isCyan = proje.renk === 'cyan';
+            const isFirst = index === 0;
 
             return (
               <div
                 key={proje.id}
-                className="p-8 sm:p-10 flex flex-col justify-between space-y-6 rounded-2xl bg-[#102235] border border-[#1B3A52] hover:border-[#42A5F5] transition-colors"
+                className={`flex flex-col justify-between space-y-6 ${
+                  isFirst
+                    ? 'md:pr-10 lg:pr-14'
+                    : 'md:pl-10 lg:pl-14 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-[#1B3A52]'
+                }`}
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span
-                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold border ${
-                        isCyan
-                          ? 'border-[#42A5F5]/40 text-[#6CC4FF] bg-[#0B1826]'
-                          : 'border-amber-500/40 text-amber-300 bg-[#0B1826]'
-                      }`}
-                    >
-                      {isCyan ? <Shield className="h-3.5 w-3.5 text-[#6CC4FF]" /> : <Coins className="h-3.5 w-3.5 text-amber-400]" />}
-                      <span>{proje.kategori}</span>
+                    <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase">
+                      {isCyan ? (
+                        <span className="inline-flex items-center gap-1.5 text-[#6CC4FF]">
+                          <Shield className="h-4 w-4 text-[#42A5F5]" />
+                          <span>{proje.kategori}</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 text-amber-300">
+                          <Coins className="h-4 w-4 text-amber-400" />
+                          <span>{proje.kategori}</span>
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-medium text-[#A8B4C2] tracking-wider">
+                      TEKNOFEST
                     </span>
-                    <span className="text-xs text-[#A8B4C2] font-medium">TEKNOFEST</span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold text-[#F2F6FA] tracking-tight">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#F2F6FA] tracking-tight">
                     {proje.ad}
                   </h3>
 
@@ -123,11 +133,11 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#1B3A52] flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pt-2">
                   {proje.etiketler.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 rounded-md text-xs font-medium bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2]"
+                      className="px-2.5 py-1 rounded text-xs font-medium text-[#A8B4C2] bg-[#0B1826] border border-[#1B3A52]/60"
                     >
                       {tag}
                     </span>
@@ -187,72 +197,72 @@ export default function HomePage() {
 
       {/* 4. ARAMIZA KATILIN & GOOGLE FORMS BAŞVURU BÖLÜMÜ */}
       <section id="katil" className="site-container scroll-mt-24 space-y-10">
-        <div className="p-8 sm:p-14 relative overflow-hidden rounded-3xl bg-[#0B1826] border border-[#1B3A52] space-y-8">
-          <div className="max-w-3xl space-y-3 relative z-10">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight leading-tight">
-              Tulpar Takımına Katılın
-            </h2>
-            <p className="text-lg sm:text-xl text-[#A8B4C2] leading-relaxed font-normal">
-              {katilim.aciklama}
+        <div className="max-w-3xl space-y-3">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight leading-tight">
+            Tulpar Takımına Katılın
+          </h2>
+          <p className="text-base sm:text-lg text-[#A8B4C2] leading-relaxed font-normal">
+            {katilim.aciklama}
+          </p>
+        </div>
+
+        {/* 3 Çalışma Alanı: Direkt yazı, kutucuksuz ve aralarında ince ayrım çizgisi */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 pt-2">
+          <div className="md:pr-8 space-y-2">
+            <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
+              <CheckCircle2 className="h-5 w-5 text-[#6CC4FF] shrink-0" />
+              <span>Yazılım & Algoritma</span>
+            </div>
+            <p className="text-sm text-[#A8B4C2] leading-relaxed">
+              Görüntü işleme, otonom hedef takip algoritmaları ve FinTech veri analitiği.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10">
-            <div className="p-6 rounded-2xl bg-[#102235] border border-[#1B3A52] space-y-2">
-              <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
-                <CheckCircle2 className="h-5 w-5 text-[#6CC4FF] shrink-0" />
-                <span>Yazılım & Algoritma</span>
-              </div>
-              <p className="text-sm text-[#A8B4C2]">
-                Görüntü işleme, otonom hedef takip algoritmaları ve FinTech veri analitiği.
-              </p>
+          <div className="md:px-8 pt-6 md:pt-0 border-t md:border-t-0 md:border-l border-[#1B3A52] space-y-2">
+            <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
+              <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+              <span>Donanım & Aviyonik</span>
             </div>
-
-            <div className="p-6 rounded-2xl bg-[#102235] border border-[#1B3A52] space-y-2">
-              <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
-                <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
-                <span>Donanım & Aviyonik</span>
-              </div>
-              <p className="text-sm text-[#A8B4C2]">
-                Gömülü Linux, gerçek zamanlı sensör haberleşmesi ve elektronik devre tasarımı.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#102235] border border-[#1B3A52] space-y-2">
-              <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
-                <span>Mekanik & Tasarım</span>
-              </div>
-              <p className="text-sm text-[#A8B4C2]">
-                CAD modelleme, kinematik analiz ve yarışma platformu üretim süreçleri.
-              </p>
-            </div>
+            <p className="text-sm text-[#A8B4C2] leading-relaxed">
+              Gömülü Linux, gerçek zamanlı sensör haberleşmesi ve elektronik devre tasarımı.
+            </p>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 relative z-10">
+          <div className="md:pl-8 pt-6 md:pt-0 border-t md:border-t-0 md:border-l border-[#1B3A52] space-y-2">
+            <div className="flex items-center gap-2 text-[#F2F6FA] font-bold text-base">
+              <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+              <span>Mekanik & Tasarım</span>
+            </div>
+            <p className="text-sm text-[#A8B4C2] leading-relaxed">
+              CAD modelleme, kinematik analiz ve yarışma platformu üretim süreçleri.
+            </p>
+          </div>
+        </div>
+
+        {/* Aksiyon Butonları */}
+        <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          <a
+            href={katilim.googleFormsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-base font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
+          >
+            <FileText className="h-5 w-5" />
+            <span>Google Forms ile Başvuru Yap</span>
+            <ExternalLink className="h-4 w-4" />
+          </a>
+
+          {iletisim.linkedin && (
             <a
-              href={katilim.googleFormsUrl}
+              href={iletisim.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-base font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
+              className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
             >
-              <FileText className="h-5 w-5" />
-              <span>Google Forms ile Başvuru Yap</span>
-              <ExternalLink className="h-4 w-4" />
+              <LinkedinIcon className="h-5 w-5 text-[#42A5F5]" />
+              <span>LinkedIn ile İletişim</span>
             </a>
-
-            {iletisim.linkedin && (
-              <a
-                href={iletisim.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-[#102235] hover:bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
-              >
-                <LinkedinIcon className="h-5 w-5 text-[#42A5F5]" />
-                <span>LinkedIn ile İletişim</span>
-              </a>
-            )}
-          </div>
+          )}
         </div>
       </section>
     </div>
