@@ -2,29 +2,29 @@
 
 :root {
   /* Zemin ve Yüzeyler */
-  --bg-main: #070B14;
-  --bg-surface: #0B1220;
-  --bg-surface-elevated: #0F172A;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --bg-main: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F8FAFC;
+  --border-subtle: rgba(15, 23, 42, 0.08);
 
-  /* Ana Renk (Keşfet, Proje, Linkler): Cyan -> Mavi Gradient */
-  --color-primary: #22D3EE;
-  --color-primary-end: #3B82F6;
-  --color-primary-muted: rgba(34, 211, 238, 0.12);
+  /* Ana Renk: Mavi Gradient */
+  --color-primary: #0284C7;
+  --color-primary-end: #2563EB;
+  --color-primary-muted: rgba(2, 132, 199, 0.12);
 
-  /* İkinci Renk (Sponsor, Katıl, Aksiyon): Amber -> Turuncu Gradient */
-  --color-secondary: #FBBF24;
-  --color-secondary-end: #F97316;
-  --color-secondary-muted: rgba(251, 191, 36, 0.12);
+  /* İkinci Renk: Amber -> Turuncu Gradient */
+  --color-secondary: #F59E0B;
+  --color-secondary-end: #EA580C;
+  --color-secondary-muted: rgba(245, 158, 11, 0.12);
 
-  /* Yan Renkler (Kart ve İkon Ayrımı) */
-  --color-violet: #A78BFA;
-  --color-violet-muted: rgba(167, 139, 250, 0.12);
-  --color-emerald: #34D399;
-  --color-emerald-muted: rgba(52, 211, 153, 0.12);
+  /* Yan Renkler */
+  --color-violet: #7C3AED;
+  --color-violet-muted: rgba(124, 58, 237, 0.12);
+  --color-emerald: #059669;
+  --color-emerald-muted: rgba(5, 150, 105, 0.12);
 
   /* Mikro Vurgular */
-  --color-red: #EF4444;
+  --color-red: #DC2626;
 }
 
 @theme {
@@ -43,7 +43,7 @@ html {
 
 body {
   background-color: var(--bg-main);
-  color: #E2E8F0;
+  color: #1E293B;
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1.125rem; /* 18px */
   line-height: 1.7;
@@ -74,9 +74,9 @@ body {
   }
 }
 
-/* Kart Hover Stilleri (Hafif kalkma + accent parlaması) */
+/* Kart Hover Stilleri */
 .tech-card {
-  background-color: var(--bg-surface);
+  background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--border-subtle);
   border-radius: 0.875rem;
   transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -86,127 +86,29 @@ body {
 
 .tech-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 0 14px 35px -12px rgba(34, 211, 238, 0.16);
-}
-
-/* 4 Renkli Kart Hover Sınıfları */
-.card-cyan {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-top: 2px solid #22D3EE;
-  border-radius: 0.875rem;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.22s ease, box-shadow 0.22s ease;
-}
-.card-cyan:hover {
-  transform: translateY(-4px);
-  border-color: rgba(34, 211, 238, 0.5);
-  box-shadow: 0 14px 35px -12px rgba(34, 211, 238, 0.22);
-}
-
-.card-amber {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-top: 2px solid #FBBF24;
-  border-radius: 0.875rem;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.22s ease, box-shadow 0.22s ease;
-}
-.card-amber:hover {
-  transform: translateY(-4px);
-  border-color: rgba(251, 191, 36, 0.5);
-  box-shadow: 0 14px 35px -12px rgba(251, 191, 36, 0.22);
-}
-
-.card-violet {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-top: 2px solid #A78BFA;
-  border-radius: 0.875rem;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.22s ease, box-shadow 0.22s ease;
-}
-.card-violet:hover {
-  transform: translateY(-4px);
-  border-color: rgba(167, 139, 250, 0.5);
-  box-shadow: 0 14px 35px -12px rgba(167, 139, 250, 0.22);
-}
-
-.card-emerald {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-top: 2px solid #34D399;
-  border-radius: 0.875rem;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.22s ease, box-shadow 0.22s ease;
-}
-.card-emerald:hover {
-  transform: translateY(-4px);
-  border-color: rgba(52, 211, 153, 0.5);
-  box-shadow: 0 14px 35px -12px rgba(52, 211, 153, 0.22);
+  box-shadow: 0 14px 35px -12px rgba(2, 132, 199, 0.15);
 }
 
 /* Bölüm Derinliği: Nokta ızgarası & Gradient Ayrım Çizgisi */
 .bg-dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 .section-divider {
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.25) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.25) 50%, transparent 100%);
 }
 
 .section-divider-amber {
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(251, 191, 36, 0.25) 50%, transparent 100%);
-}
-
-/* Radar & HUD Animasyonları */
-@keyframes radar-sweep {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes radar-blip {
-  0%, 100% {
-    opacity: 0.25;
-    transform: scale(0.85);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
-}
-
-.animate-radar-sweep {
-  animation: radar-sweep 8s linear infinite;
-  transform-origin: center center;
-}
-
-.animate-radar-blip-cyan {
-  animation: radar-blip 2.2s ease-in-out infinite;
-  transform-origin: center center;
-}
-
-.animate-radar-blip-amber {
-  animation: radar-blip 1.8s ease-in-out infinite 0.5s;
-  transform-origin: center center;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-radar-sweep,
-  .animate-radar-blip-cyan,
-  .animate-radar-blip-amber {
-    animation: none !important;
-  }
+  background: linear-gradient(90deg, transparent 0%, rgba(245, 158, 11, 0.25) 50%, transparent 100%);
 }
 
 /* Erişilebilir Odak Stilleri */
 a:focus-visible, button:focus-visible {
-  outline: 2px solid #22D3EE;
+  outline: 2px solid #0284C7;
   outline-offset: 3px;
 }

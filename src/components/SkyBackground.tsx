@@ -21,15 +21,7 @@ interface Plane {
   targetPitch: number;
   smokeTimer: number;
   respawnIn: number;
-}
-
-interface Star {
-  x: number;
-  y: number;
-  radius: number;
-  baseAlpha: number;
-  twinkleSpeed: number;
-  twinklePhase: number;
+  bodyColor: string;
 }
 
 interface Cloud {
@@ -74,6 +66,7 @@ interface Spark {
   alpha: number;
   life: number;
   maxLife: number;
+  color: string;
 }
 
 export default function SkyBackground() {
@@ -85,7 +78,6 @@ export default function SkyBackground() {
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let animId = 0;
@@ -93,7 +85,6 @@ export default function SkyBackground() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // DPR capping for ultra-smooth 60fps performance
     const getDpr = () => Math.min(window.devicePixelRatio || 1, 2);
 
     const resizeCanvas = () => {
@@ -110,22 +101,21 @@ export default function SkyBackground() {
 
     resizeCanvas();
 
-    // 1. PRE-RENDER CLOUD TEXTURES (Offscreen Canvas for 60fps fill-rate performance)
+    // 1. PRE-RENDER SOFT WHITE/SKY CLOUD TEXTURES
     const cloudTextures: HTMLCanvasElement[] = [];
-    const createCloudTexture = (texW: number, texH: number, colorRgb: string) => {
+    const createCloudTexture = (texW: number, texH: number, r: number, g: number, b: number) => {
       const offCanvas = document.createElement('canvas');
       offCanvas.width = texW;
       offCanvas.height = texH;
       const offCtx = offCanvas.getContext('2d');
       if (!offCtx) return offCanvas;
 
-      // Draw cluster of soft gradient puffs
       const puffs = [
         { cx: texW * 0.35, cy: texH * 0.55, r: texH * 0.42 },
-        { cx: texW * 0.5, cy: texH * 0.45, r: texH * 0.46 },
+        { cx: texW * 0.5, cy: texH * 0.45, r: texH * 0.48 },
         { cx: texW * 0.65, cy: texH * 0.52, r: texH * 0.4 },
         { cx: texW * 0.22, cy: texH * 0.62, r: texH * 0.32 },
-        { cx: texW * 0.78, cy: texH * 0.6, r: texH * 0.34 },
+        { cx: texW * 0.78, cy: texH * 0.6, r: texH * 0.35 },
       ];
 
       puffs.forEach((puff) => {
@@ -137,9 +127,9 @@ export default function SkyBackground() {
           puff.cy,
           puff.r
         );
-        radGrad.addColorStop(0, `rgba(${colorRgb}, 0.22)`);
-        radGrad.addColorStop(0.5, `rgba(${colorRgb}, 0.12)`);
-        radGrad.addColorStop(1, `rgba(${colorRgb}, 0)`);
+        radGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.65)`);
+        radGrad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, 0.35)`);
+        radGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
         offCtx.fillStyle = radGrad;
         offCtx.beginPath();
         offCtx.arc(puff.cx, puff.cy, puff.r, 0, Math.PI * 2);
@@ -149,30 +139,17 @@ export default function SkyBackground() {
       return offCanvas;
     };
 
-    cloudTextures.push(createCloudTexture(450, 180, '25, 45, 75'));
-    cloudTextures.push(createCloudTexture(550, 200, '20, 38, 64'));
-    cloudTextures.push(createCloudTexture(380, 160, '15, 32, 54'));
+    // Soft white and subtle pale cyan-white clouds
+    cloudTextures.push(createCloudTexture(450, 180, 255, 255, 255));
+    cloudTextures.push(createCloudTexture(550, 200, 240, 248, 255));
+    cloudTextures.push(createCloudTexture(380, 160, 230, 243, 255));
 
-    // 2. STARS GENERATION (Subtle atmospheric light points)
-    const stars: Star[] = [];
-    const starCount = Math.min(Math.floor(width / 32), 48);
-    for (let i = 0; i < starCount; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * (height * 0.65), // Mostly high altitude
-        radius: 0.6 + Math.random() * 0.9,
-        baseAlpha: 0.12 + Math.random() * 0.28,
-        twinkleSpeed: 0.8 + Math.random() * 1.5,
-        twinklePhase: Math.random() * Math.PI * 2,
-      });
-    }
-
-    // 3. CLOUDS GENERATION (Distant & Near Parallax Layers)
+    // 2. CLOUDS INSTANCES (Parallax)
     const clouds: Cloud[] = [];
     const cloudLayers = [
-      { count: 3, speedMin: 2.5, speedMax: 4.5, scale: 1.1, opacity: 0.05, tex: 1 }, // Distant
-      { count: 4, speedMin: 5.5, speedMax: 8.5, scale: 1.4, opacity: 0.08, tex: 0 }, // Mid
-      { count: 2, speedMin: 9.0, speedMax: 13.0, scale: 1.7, opacity: 0.06, tex: 2 }, // Near
+      { count: 3, speedMin: 2.5, speedMax: 4.5, scale: 1.1, opacity: 0.35, tex: 1 },
+      { count: 4, speedMin: 5.0, speedMax: 8.0, scale: 1.4, opacity: 0.45, tex: 0 },
+      { count: 2, speedMin: 8.5, speedMax: 12.0, scale: 1.7, opacity: 0.3, tex: 2 },
     ];
 
     cloudLayers.forEach((layer) => {
@@ -180,7 +157,7 @@ export default function SkyBackground() {
         const tex = cloudTextures[layer.tex];
         clouds.push({
           x: Math.random() * (width + 600) - 300,
-          y: Math.random() * (height * 0.85) - 50,
+          y: Math.random() * (height * 0.8) - 50,
           speed: layer.speedMin + Math.random() * (layer.speedMax - layer.speedMin),
           scale: layer.scale * (0.85 + Math.random() * 0.3),
           opacity: layer.opacity * (0.85 + Math.random() * 0.3),
@@ -191,7 +168,7 @@ export default function SkyBackground() {
       }
     });
 
-    // 4. AIRCRAFT GENERATION
+    // 3. BLUE AIRCRAFT GENERATION
     const getTargetPlaneCount = () => {
       if (width < 640) return 3; // Mobile: 2-3
       if (width < 1024) return 4; // Tablet: 3-5
@@ -208,22 +185,26 @@ export default function SkyBackground() {
       let scale: number;
       let opacity: number;
       let speed: number;
+      let bodyColor: string;
 
-      if (depth < 0.4) {
-        // Far: small, faint
-        scale = 0.5 + Math.random() * 0.18;
-        opacity = 0.28 + Math.random() * 0.16;
-        speed = 26 + Math.random() * 16;
+      if (depth < 0.35) {
+        // Far: light sky blue, small, subtle
+        scale = 0.52 + Math.random() * 0.16;
+        opacity = 0.5 + Math.random() * 0.18;
+        speed = 28 + Math.random() * 16;
+        bodyColor = '#3B82F6'; // Sky blue
       } else if (depth < 0.75) {
-        // Mid
-        scale = 0.75 + Math.random() * 0.2;
-        opacity = 0.48 + Math.random() * 0.16;
-        speed = 42 + Math.random() * 20;
+        // Mid: vibrant royal blue
+        scale = 0.78 + Math.random() * 0.2;
+        opacity = 0.78 + Math.random() * 0.14;
+        speed = 46 + Math.random() * 20;
+        bodyColor = '#2563EB'; // Royal blue
       } else {
-        // Near: larger, crisp
+        // Near: deep aerospace navy blue
         scale = 1.05 + Math.random() * 0.22;
-        opacity = 0.68 + Math.random() * 0.16;
-        speed = 60 + Math.random() * 22;
+        opacity = 0.92 + Math.random() * 0.08;
+        speed = 64 + Math.random() * 22;
+        bodyColor = '#1D4ED8'; // Deep blue
       }
 
       const baseY = height * (0.1 + Math.random() * 0.68);
@@ -253,22 +234,22 @@ export default function SkyBackground() {
         targetPitch: 0,
         smokeTimer: 0,
         respawnIn: 0,
+        bodyColor,
       };
     };
 
-    // Initialize planes scattered across screen
     const initialTarget = getTargetPlaneCount();
     for (let i = 0; i < initialTarget; i++) {
       const spreadX = (width / initialTarget) * (i + 0.5) + (Math.random() - 0.5) * 80;
       planes.push(createPlane(spreadX));
     }
 
-    // 5. FX PARTICLES
+    // 4. FX PARTICLES
     const smokeParticles: SmokeParticle[] = [];
     const hitFlashes: HitFlash[] = [];
     const sparks: Spark[] = [];
 
-    // 6. INTERACTION & HOVER TRACKING
+    // 5. INTERACTION & HOVER TRACKING
     let mouseX = -9999;
     let mouseY = -9999;
     let hoveredPlaneId: number | null = null;
@@ -284,7 +265,6 @@ export default function SkyBackground() {
 
       if (prefersReducedMotion) return;
 
-      // If cursor is directly over an interactive link/button, don't lock or change cursor
       if (isPointerOverInteractiveElement(mouseX, mouseY)) {
         if (hoveredPlaneId !== null) {
           hoveredPlaneId = null;
@@ -293,7 +273,6 @@ export default function SkyBackground() {
         return;
       }
 
-      // Check for plane hover
       let foundPlane: Plane | null = null;
       for (const p of planes) {
         if (p.state !== 'cruising') continue;
@@ -325,19 +304,16 @@ export default function SkyBackground() {
       }
     };
 
-    // TRIGGER PLANE HIT ON CLICK / TAP
     const handlePointerDown = (e: PointerEvent) => {
       if (prefersReducedMotion) return;
 
       const cx = e.clientX;
       const cy = e.clientY;
 
-      // Always allow native clicks on links, buttons, inputs, etc.
       if (isPointerOverInteractiveElement(cx, cy)) {
         return;
       }
 
-      // Check if user clicked on any cruising plane
       let hitPlane: Plane | null = null;
       let minDistance = Infinity;
 
@@ -352,15 +328,13 @@ export default function SkyBackground() {
       }
 
       if (hitPlane) {
-        // Trigger shoot down
         hitPlane.state = 'falling';
         hitPlane.fallTime = 0;
-        // Pitch nose down (steeper rotation towards ground: ~75-82 degrees)
         const divePitch = hitPlane.heading === 1 ? 1.38 : Math.PI - 1.38;
         hitPlane.targetPitch = divePitch;
         hitPlane.vy = Math.max(hitPlane.vy, 35);
 
-        // Spawn hit flash
+        // Flash ring (Sky Blue)
         hitFlashes.push({
           x: hitPlane.x,
           y: hitPlane.y,
@@ -371,7 +345,7 @@ export default function SkyBackground() {
           maxLife: 0.28,
         });
 
-        // Spawn small crisp spark burst (4-6 tiny sparks, no big cartoon fireball)
+        // Small spark burst
         const sparkCount = 5 + Math.floor(Math.random() * 2);
         for (let i = 0; i < sparkCount; i++) {
           const spAngle = Math.random() * Math.PI * 2;
@@ -385,10 +359,10 @@ export default function SkyBackground() {
             alpha: 0.9,
             life: 0.35 + Math.random() * 0.25,
             maxLife: 0.6,
+            color: Math.random() > 0.5 ? '#0284C7' : '#F59E0B',
           });
         }
 
-        // Reset hover state
         if (hoveredPlaneId === hitPlane.id) {
           hoveredPlaneId = null;
           document.body.style.cursor = '';
@@ -401,9 +375,9 @@ export default function SkyBackground() {
     document.addEventListener('pointerleave', handlePointerLeave);
     window.addEventListener('resize', resizeCanvas);
 
-    // 7. DRAWING ROUTINES
+    // 6. DRAWING ROUTINES
 
-    // DRAW FIGHTER JET SILHOUETTE
+    // DRAW BLUE FIGHTER JET SILHOUETTE
     const drawFighterJet = (p: Plane) => {
       ctx.save();
       ctx.translate(p.x, p.y);
@@ -411,7 +385,6 @@ export default function SkyBackground() {
       ctx.scale(p.scale, p.scale);
       ctx.globalAlpha = p.opacity;
 
-      // Jet silhouette path (sleek 5th-gen fighter / twin canted tails)
       ctx.beginPath();
       ctx.moveTo(18, 0); // Nose tip
       ctx.lineTo(10, -2.5);
@@ -437,35 +410,35 @@ export default function SkyBackground() {
       ctx.lineTo(10, 2.5);
       ctx.closePath();
 
-      // Body fill: deep stealth navy charcoal
-      ctx.fillStyle = '#101B2B';
+      // Body fill: Modern aerospace blue
+      ctx.fillStyle = p.bodyColor;
       ctx.fill();
 
-      // Subtle atmospheric edge rim
-      ctx.lineWidth = 0.8;
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.22)';
+      // Crisp contrast rim stroke
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
       ctx.stroke();
 
       // Canopy highlight ridge
       ctx.beginPath();
       ctx.moveTo(8, 0);
       ctx.lineTo(2, 0);
-      ctx.strokeStyle = 'rgba(34, 211, 238, 0.45)';
-      ctx.lineWidth = 1.1;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.lineWidth = 1.2;
       ctx.stroke();
 
-      // Subtle afterburner dot when cruising
+      // Subtle engine afterburner dot when cruising
       if (p.state === 'cruising') {
         ctx.beginPath();
-        ctx.arc(-16.5, 0, 1.3, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(56, 189, 248, 0.75)';
+        ctx.arc(-16.5, 0, 1.4, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.95)';
         ctx.fill();
       }
 
       ctx.restore();
     };
 
-    // DRAW MINIMAL TARGET RETICLE [ + ]
+    // DRAW MINIMAL BLUE TARGET RETICLE [ + ]
     const drawTargetReticle = (p: Plane) => {
       ctx.save();
       ctx.translate(p.x, p.y);
@@ -473,12 +446,11 @@ export default function SkyBackground() {
       const half = Math.max(22, 28 * p.scale);
       const cornerLen = 7;
 
-      ctx.strokeStyle = '#22D3EE';
-      ctx.lineWidth = 1.2;
-      ctx.shadowColor = 'rgba(34, 211, 238, 0.5)';
-      ctx.shadowBlur = 4;
+      ctx.strokeStyle = '#0284C7'; // Sky-600
+      ctx.lineWidth = 1.4;
+      ctx.shadowColor = 'rgba(2, 132, 199, 0.35)';
+      ctx.shadowBlur = 3;
 
-      // 4 Corner Brackets
       ctx.beginPath();
       // Top-Left
       ctx.moveTo(-half + cornerLen, -half);
@@ -513,38 +485,27 @@ export default function SkyBackground() {
       ctx.lineTo(0, 3.5);
       ctx.stroke();
 
-      // Minimal military HUD label
       ctx.shadowBlur = 0;
-      ctx.fillStyle = '#22D3EE';
-      ctx.font = '8px monospace';
-      ctx.fillText('TRK', half + 3, -half + 7);
+      ctx.fillStyle = '#0284C7';
+      ctx.font = 'bold 8px monospace';
+      ctx.fillText('LOCK', -half, -half - 4);
 
       ctx.restore();
     };
 
-    // 8. MAIN ANIMATION LOOP (60 FPS with Delta Time)
+    // 7. ANIMATION LOOP
     const render = (time: number) => {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
-      // Clear & Draw Sky Gradient
+      // Clear & Draw White/Light-Sky Gradient
       const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
-      skyGrad.addColorStop(0, '#040711');
-      skyGrad.addColorStop(0.35, '#060E1D');
-      skyGrad.addColorStop(0.7, '#09182C');
-      skyGrad.addColorStop(1, '#0E243E');
+      skyGrad.addColorStop(0, '#FFFFFF');
+      skyGrad.addColorStop(0.35, '#F8FAFD');
+      skyGrad.addColorStop(0.7, '#EEF5FC');
+      skyGrad.addColorStop(1, '#E2EEF9');
       ctx.fillStyle = skyGrad;
       ctx.fillRect(0, 0, width, height);
-
-      // Render Atmospheric Stars
-      stars.forEach((s) => {
-        const twinkle = Math.sin(time * 0.001 * s.twinkleSpeed + s.twinklePhase);
-        const alpha = Math.max(0.05, s.baseAlpha + twinkle * 0.1);
-        ctx.fillStyle = `rgba(226, 232, 240, ${alpha})`;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
 
       // Render & Drift Clouds
       clouds.forEach((c) => {
@@ -553,7 +514,7 @@ export default function SkyBackground() {
           const texW = c.width * c.scale;
           if (c.x > width + 100) {
             c.x = -texW - 100;
-            c.y = Math.random() * (height * 0.85) - 50;
+            c.y = Math.random() * (height * 0.8) - 50;
           }
         }
         const tex = cloudTextures[c.textureIdx];
@@ -565,9 +526,8 @@ export default function SkyBackground() {
         }
       });
 
-      // If user prefers reduced motion, skip plane updates
       if (!prefersReducedMotion) {
-        // Update & Render Smoke Particles
+        // Smoke Particles
         for (let i = smokeParticles.length - 1; i >= 0; i--) {
           const sp = smokeParticles[i];
           sp.life -= dt;
@@ -577,9 +537,7 @@ export default function SkyBackground() {
           }
           sp.x += sp.vx * dt;
           sp.y += sp.vy * dt;
-          // Thermal upward drift
           sp.vy -= 6 * dt;
-          // Growth and fade
           const progress = 1 - sp.life / sp.maxLife;
           const currentSize = sp.size + (sp.maxSize - sp.size) * progress;
           const currentAlpha = (sp.life / sp.maxLife) * sp.alpha;
@@ -590,7 +548,7 @@ export default function SkyBackground() {
           ctx.fill();
         }
 
-        // Update & Render Hit Flashes
+        // Hit Flashes
         for (let i = hitFlashes.length - 1; i >= 0; i--) {
           const hf = hitFlashes[i];
           hf.life -= dt;
@@ -602,14 +560,14 @@ export default function SkyBackground() {
           const curR = hf.radius + (hf.maxRadius - hf.radius) * progress;
           const curA = (hf.life / hf.maxLife) * hf.alpha;
 
-          ctx.strokeStyle = `rgba(56, 189, 248, ${curA})`;
+          ctx.strokeStyle = `rgba(2, 132, 199, ${curA})`;
           ctx.lineWidth = 1.8;
           ctx.beginPath();
           ctx.arc(hf.x, hf.y, curR, 0, Math.PI * 2);
           ctx.stroke();
         }
 
-        // Update & Render Sparks
+        // Sparks
         for (let i = sparks.length - 1; i >= 0; i--) {
           const spk = sparks[i];
           spk.life -= dt;
@@ -619,30 +577,26 @@ export default function SkyBackground() {
           }
           spk.x += spk.vx * dt;
           spk.y += spk.vy * dt;
-          spk.vy += 90 * dt; // Gravity on sparks
+          spk.vy += 90 * dt;
           const spkA = (spk.life / spk.maxLife) * spk.alpha;
 
-          ctx.fillStyle = `rgba(251, 191, 36, ${spkA})`;
+          ctx.fillStyle = spk.color === '#0284C7' ? `rgba(2, 132, 199, ${spkA})` : `rgba(245, 158, 11, ${spkA})`;
           ctx.beginPath();
           ctx.arc(spk.x, spk.y, spk.size, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Update Aircraft Fleet
+        // Update Planes
         const targetCount = getTargetPlaneCount();
 
         planes.forEach((p) => {
           if (p.state === 'cruising') {
-            // Cruising flight physics
             p.x += p.vx * dt;
-            // Gentle sinusoidal vertical sway
             const sway = Math.sin(time * 0.001 * p.swayFreq + p.swayPhase);
             p.y = p.baseY + sway * p.swayAmp;
-            // Slight pitch matching climb/descent
             const pitchJitter = Math.cos(time * 0.001 * p.swayFreq + p.swayPhase) * 0.06;
             p.angle = (p.heading === 1 ? 0 : Math.PI) + (p.heading === 1 ? pitchJitter : -pitchJitter);
 
-            // Screen boundary wrapping
             if (p.heading === 1 && p.x > width + 100) {
               p.x = -80;
               p.baseY = height * (0.1 + Math.random() * 0.68);
@@ -653,25 +607,20 @@ export default function SkyBackground() {
 
             drawFighterJet(p);
 
-            // Draw target reticle if hovered
             if (hoveredPlaneId === p.id) {
               drawTargetReticle(p);
             }
           } else if (p.state === 'falling') {
-            // Shot down: gravity, steep pitch rotation, turbulence & smoke trail
             p.fallTime += dt;
-            p.vy += 220 * dt; // Gravity acceleration
-            p.vx *= Math.pow(0.96, dt * 60); // Air drag
+            p.vy += 220 * dt;
+            p.vx *= Math.pow(0.96, dt * 60);
 
-            // Smooth rotation towards target dive angle (20deg -> 50deg -> 80deg)
             p.angle += (p.targetPitch - p.angle) * Math.min(dt * 3.2, 1);
 
-            // Lateral wobble/spin as it falls
             const wobble = Math.sin(p.fallTime * 9) * 16 * dt;
             p.x += p.vx * dt + wobble;
             p.y += p.vy * dt;
 
-            // Emit smoke particles behind tail
             p.smokeTimer += dt;
             if (p.smokeTimer >= 0.038) {
               p.smokeTimer = 0;
@@ -694,23 +643,19 @@ export default function SkyBackground() {
 
             drawFighterJet(p);
 
-            // Out of bounds detection
             if (p.y > height + 80) {
               p.state = 'dead';
-              // Respawn between 4.0 and 7.5 seconds
               p.respawnIn = 4.0 + Math.random() * 3.5;
             }
           } else if (p.state === 'dead') {
             p.respawnIn -= dt;
             if (p.respawnIn <= 0) {
-              // Reincarnate plane
               const newP = createPlane();
               Object.assign(p, newP);
             }
           }
         });
 
-        // Ensure total plane fleet matches target count
         while (planes.length < targetCount) {
           planes.push(createPlane());
         }
@@ -725,7 +670,6 @@ export default function SkyBackground() {
 
     animId = requestAnimationFrame(render);
 
-    // Pause animation when tab is inactive to save battery and CPU
     const handleVisibilityChange = () => {
       if (document.hidden) {
         cancelAnimationFrame(animId);

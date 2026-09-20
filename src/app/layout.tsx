@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: '#070a12',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
 };
@@ -60,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#050B14] text-slate-200 relative selection:bg-cyan-500/20 selection:text-cyan-200">
+      <body className="min-h-full flex flex-col bg-white text-slate-800 relative selection:bg-blue-500/20 selection:text-blue-900">
         <SkyBackground />
         <div className="relative z-10 flex min-h-full flex-col">
           <Navbar />
