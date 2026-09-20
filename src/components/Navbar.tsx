@@ -30,8 +30,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs'
-          : 'bg-white/80 backdrop-blur-sm border-b border-transparent'
+          ? 'bg-[#07111C]/95 backdrop-blur-md border-b border-[#1B3A52] shadow-sm'
+          : 'bg-[#07111C]/80 backdrop-blur-sm border-b border-transparent'
       }`}
     >
       <div className="site-container">
@@ -42,7 +42,7 @@ export default function Navbar() {
             className="flex items-center gap-3.5 group focus:outline-none"
             aria-label="Tulpar Ülgen Ana Sayfa"
           >
-            <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-white">
+            <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-[#1B3A52] shrink-0 bg-[#0B1826]">
               <Image
                 src="/images/tulpar-logo.png"
                 alt={siteData.takim.ad}
@@ -52,10 +52,10 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+              <span className="text-xl font-bold tracking-tight text-[#F2F6FA] group-hover:text-[#6CC4FF] transition-colors">
                 {siteData.takim.ad}
               </span>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-[#A8B4C2]">
                 {siteData.takim.okul} • TEKNOFEST
               </span>
             </div>
@@ -67,18 +67,18 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2 rounded-lg text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors"
+                className="px-4 py-2 rounded-lg text-base font-medium text-[#A8B4C2] hover:text-[#6CC4FF] hover:bg-[#0B1826] transition-colors"
               >
                 <span>{item.baslik}</span>
               </a>
             ))}
           </nav>
 
-          {/* Desktop Sağ Buton: Başvuru Yap (Düz ve Parlamasız) */}
+          {/* Desktop Sağ Buton: Başvuru Yap */}
           <div className="hidden md:flex items-center gap-4">
             <a
               href="#katil"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>Başvuru Yap</span>
@@ -89,7 +89,7 @@ export default function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              className="p-2.5 rounded-lg text-[#A8B4C2] hover:text-[#F2F6FA] hover:bg-[#0B1826] transition-colors"
               aria-label={isOpen ? 'Menüyü kapat' : 'Menüyü aç'}
               aria-expanded={isOpen}
             >
@@ -101,24 +101,24 @@ export default function Navbar() {
 
       {/* Mobil Drawer */}
       {isOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-b border-[#1B3A52] bg-[#0B1826]/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200">
           <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
+                className="px-4 py-3 rounded-lg text-base font-medium text-[#A8B4C2] hover:bg-[#102235] hover:text-[#6CC4FF] transition-colors"
               >
                 <span>{item.baslik}</span>
               </a>
             ))}
           </nav>
-          <div className="mt-4 pt-4 border-t border-slate-200">
+          <div className="mt-4 pt-4 border-t border-[#1B3A52]">
             <a
               href="#katil"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-semibold bg-blue-600 text-white"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-[#42A5F5] text-[#07111C]"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>Başvuru Yap</span>

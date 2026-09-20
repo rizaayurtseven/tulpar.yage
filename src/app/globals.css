@@ -1,40 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  /* Zemin ve Yüzeyler */
-  --bg-main: #FFFFFF;
-  --bg-surface: #FFFFFF;
-  --bg-surface-elevated: #F8FAFC;
-  --border-subtle: rgba(15, 23, 42, 0.08);
+  /* Kullanıcı Paleti: Radar / Hava Savunma / Gece Operasyonu */
+  --bg-main: #07111C;
+  --bg-surface: #0B1826;
+  --bg-card: #102235;
+  --border-main: #1B3A52;
 
-  /* Ana Renk: Mavi Gradient */
-  --color-primary: #0284C7;
-  --color-primary-end: #2563EB;
-  --color-primary-muted: rgba(2, 132, 199, 0.12);
+  /* Vurgu Mavileri */
+  --color-primary: #42A5F5;
+  --color-bright: #6CC4FF;
 
-  /* İkinci Renk: Amber -> Turuncu Gradient */
-  --color-secondary: #F59E0B;
-  --color-secondary-end: #EA580C;
-  --color-secondary-muted: rgba(245, 158, 11, 0.12);
+  /* Tipografi */
+  --text-main: #F2F6FA;
+  --text-muted: #A8B4C2;
 
-  /* Yan Renkler */
-  --color-violet: #7C3AED;
-  --color-violet-muted: rgba(124, 58, 237, 0.12);
-  --color-emerald: #059669;
-  --color-emerald-muted: rgba(5, 150, 105, 0.12);
-
-  /* Mikro Vurgular */
-  --color-red: #DC2626;
+  /* Yan Vurgular */
+  --color-amber: #FBBF24;
+  --color-emerald: #34D399;
 }
 
 @theme {
   --color-primary: var(--color-primary);
-  --color-primary-end: var(--color-primary-end);
-  --color-secondary: var(--color-secondary);
-  --color-secondary-end: var(--color-secondary-end);
-  --color-violet: var(--color-violet);
-  --color-emerald: var(--color-emerald);
-  --color-red: var(--color-red);
+  --color-bright: var(--color-bright);
 }
 
 html {
@@ -43,7 +31,7 @@ html {
 
 body {
   background-color: var(--bg-main);
-  color: #1E293B;
+  color: var(--text-main);
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1.125rem; /* 18px */
   line-height: 1.7;
@@ -76,39 +64,20 @@ body {
 
 /* Kart Hover Stilleri */
 .tech-card {
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--border-subtle);
-  border-radius: 0.875rem;
-  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
-              border-color 0.22s ease,
-              box-shadow 0.22s ease;
+  background-color: #102235;
+  border: 1px solid #1B3A52;
+  border-radius: 1rem;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.2s ease;
 }
 
 .tech-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 35px -12px rgba(2, 132, 199, 0.15);
-}
-
-/* Bölüm Derinliği: Nokta ızgarası & Gradient Ayrım Çizgisi */
-.bg-dot-grid {
-  background-image: radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-.section-divider {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.25) 50%, transparent 100%);
-}
-
-.section-divider-amber {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(245, 158, 11, 0.25) 50%, transparent 100%);
+  transform: translateY(-3px);
+  border-color: #42A5F5;
 }
 
 /* Erişilebilir Odak Stilleri */
 a:focus-visible, button:focus-visible {
-  outline: 2px solid #0284C7;
+  outline: 2px solid #6CC4FF;
   outline-offset: 3px;
 }

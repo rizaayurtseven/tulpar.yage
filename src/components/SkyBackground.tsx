@@ -14,7 +14,7 @@ interface Plane {
   swayPhase: number;
   scale: number;
   opacity: number;
-  heading: 1 | -1; // 1: left -> right, -1: right -> left
+  heading: 1 | -1;
   angle: number;
   state: 'cruising' | 'falling' | 'dead';
   fallTime: number;
@@ -22,6 +22,7 @@ interface Plane {
   smokeTimer: number;
   respawnIn: number;
   bodyColor: string;
+  rimColor: string;
 }
 
 interface Cloud {
@@ -101,7 +102,7 @@ export default function SkyBackground() {
 
     resizeCanvas();
 
-    // 1. SOFT NEUTRAL CLOUD TEXTURES
+    // 1. TACTICAL NIGHT OPS CLOUD TEXTURES
     const cloudTextures: HTMLCanvasElement[] = [];
     const createCloudTexture = (texW: number, texH: number, r: number, g: number, b: number) => {
       const offCanvas = document.createElement('canvas');
@@ -127,8 +128,8 @@ export default function SkyBackground() {
           puff.cy,
           puff.r
         );
-        radGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.5)`);
-        radGrad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, 0.25)`);
+        radGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.35)`);
+        radGrad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, 0.18)`);
         radGrad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
         offCtx.fillStyle = radGrad;
         offCtx.beginPath();
@@ -139,17 +140,17 @@ export default function SkyBackground() {
       return offCanvas;
     };
 
-    // Soft neutral clouds
-    cloudTextures.push(createCloudTexture(450, 180, 230, 238, 248));
-    cloudTextures.push(createCloudTexture(550, 200, 235, 242, 250));
-    cloudTextures.push(createCloudTexture(380, 160, 225, 235, 246));
+    // Clouds tinted from #0B1826 and #102235
+    cloudTextures.push(createCloudTexture(450, 180, 11, 24, 38));
+    cloudTextures.push(createCloudTexture(550, 200, 16, 34, 53));
+    cloudTextures.push(createCloudTexture(380, 160, 27, 58, 82));
 
     // 2. CLOUDS INSTANCES
     const clouds: Cloud[] = [];
     const cloudLayers = [
-      { count: 3, speedMin: 2.5, speedMax: 4.5, scale: 1.1, opacity: 0.3, tex: 1 },
-      { count: 4, speedMin: 5.0, speedMax: 8.0, scale: 1.4, opacity: 0.4, tex: 0 },
-      { count: 2, speedMin: 8.5, speedMax: 12.0, scale: 1.7, opacity: 0.25, tex: 2 },
+      { count: 3, speedMin: 2.5, speedMax: 4.5, scale: 1.1, opacity: 0.35, tex: 0 },
+      { count: 4, speedMin: 5.0, speedMax: 8.0, scale: 1.4, opacity: 0.45, tex: 1 },
+      { count: 2, speedMin: 8.5, speedMax: 12.0, scale: 1.7, opacity: 0.3, tex: 2 },
     ];
 
     cloudLayers.forEach((layer) => {
@@ -168,7 +169,7 @@ export default function SkyBackground() {
       }
     });
 
-    // 3. BLUE AIRCRAFT GENERATION
+    // 3. TACTICAL AIRCRAFT GENERATION
     const getTargetPlaneCount = () => {
       if (width < 640) return 3;
       if (width < 1024) return 4;
@@ -186,22 +187,26 @@ export default function SkyBackground() {
       let opacity: number;
       let speed: number;
       let bodyColor: string;
+      let rimColor: string;
 
       if (depth < 0.35) {
         scale = 0.52 + Math.random() * 0.16;
         opacity = 0.55 + Math.random() * 0.15;
         speed = 28 + Math.random() * 16;
-        bodyColor = '#3B82F6';
+        bodyColor = '#102235';
+        rimColor = 'rgba(66, 165, 245, 0.4)';
       } else if (depth < 0.75) {
         scale = 0.78 + Math.random() * 0.2;
         opacity = 0.8 + Math.random() * 0.12;
         speed = 46 + Math.random() * 20;
-        bodyColor = '#2563EB';
+        bodyColor = '#0E1D2D';
+        rimColor = 'rgba(66, 165, 245, 0.6)';
       } else {
         scale = 1.05 + Math.random() * 0.22;
         opacity = 0.95;
         speed = 64 + Math.random() * 22;
-        bodyColor = '#1D4ED8';
+        bodyColor = '#0B1826';
+        rimColor = 'rgba(108, 196, 255, 0.75)';
       }
 
       const baseY = height * (0.1 + Math.random() * 0.68);
@@ -232,6 +237,7 @@ export default function SkyBackground() {
         smokeTimer: 0,
         respawnIn: 0,
         bodyColor,
+        rimColor,
       };
     };
 
@@ -354,7 +360,7 @@ export default function SkyBackground() {
             alpha: 0.85,
             life: 0.35 + Math.random() * 0.25,
             maxLife: 0.6,
-            color: Math.random() > 0.5 ? '#2563EB' : '#F59E0B',
+            color: Math.random() > 0.5 ? '#6CC4FF' : '#42A5F5',
           });
         }
 
@@ -372,7 +378,7 @@ export default function SkyBackground() {
 
     // 6. DRAWING ROUTINES
 
-    // DRAW BLUE FIGHTER JET (NO GLOW)
+    // DRAW TACTICAL JET SILHOUETTE
     const drawFighterJet = (p: Plane) => {
       ctx.save();
       ctx.translate(p.x, p.y);
@@ -405,27 +411,27 @@ export default function SkyBackground() {
       ctx.lineTo(10, 2.5);
       ctx.closePath();
 
-      // Solid flat aerospace blue
+      // Body fill: Dark tactical surface
       ctx.fillStyle = p.bodyColor;
       ctx.fill();
 
-      // Clean non-glowing hairline rim
-      ctx.lineWidth = 0.8;
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+      // Tactical rim stroke in #42A5F5 / #6CC4FF
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = p.rimColor;
       ctx.stroke();
 
-      // Clean flat canopy ridge (no glow)
+      // Canopy line in #6CC4FF
       ctx.beginPath();
       ctx.moveTo(8, 0);
       ctx.lineTo(2, 0);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.strokeStyle = 'rgba(108, 196, 255, 0.9)';
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
       ctx.restore();
     };
 
-    // DRAW MINIMAL BLUE TARGET RETICLE (NO GLOW)
+    // DRAW TACTICAL RETICLE [ + ]
     const drawTargetReticle = (p: Plane) => {
       ctx.save();
       ctx.translate(p.x, p.y);
@@ -433,7 +439,7 @@ export default function SkyBackground() {
       const half = Math.max(22, 28 * p.scale);
       const cornerLen = 7;
 
-      ctx.strokeStyle = '#2563EB';
+      ctx.strokeStyle = '#6CC4FF';
       ctx.lineWidth = 1.3;
 
       ctx.beginPath();
@@ -465,7 +471,7 @@ export default function SkyBackground() {
       ctx.lineTo(0, 3.5);
       ctx.stroke();
 
-      ctx.fillStyle = '#2563EB';
+      ctx.fillStyle = '#6CC4FF';
       ctx.font = 'bold 8px monospace';
       ctx.fillText('LOCK', -half, -half - 4);
 
@@ -477,11 +483,11 @@ export default function SkyBackground() {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
-      // Pure solid white background - NO two-tone split or bottom gradient cut!
-      ctx.fillStyle = '#FFFFFF';
+      // Pure solid tactical main background #07111C - 100% seamless!
+      ctx.fillStyle = '#07111C';
       ctx.fillRect(0, 0, width, height);
 
-      // Render & Drift Clouds
+      // Render Clouds
       clouds.forEach((c) => {
         if (!prefersReducedMotion) {
           c.x += c.speed * dt;
@@ -516,13 +522,13 @@ export default function SkyBackground() {
           const currentSize = sp.size + (sp.maxSize - sp.size) * progress;
           const currentAlpha = (sp.life / sp.maxLife) * sp.alpha;
 
-          ctx.fillStyle = `rgba(148, 163, 184, ${currentAlpha})`;
+          ctx.fillStyle = `rgba(168, 180, 194, ${currentAlpha})`;
           ctx.beginPath();
           ctx.arc(sp.x, sp.y, currentSize, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        // Hit Flashes (Flat ring, no shadow glow)
+        // Hit Flashes
         for (let i = hitFlashes.length - 1; i >= 0; i--) {
           const hf = hitFlashes[i];
           hf.life -= dt;
@@ -534,14 +540,14 @@ export default function SkyBackground() {
           const curR = hf.radius + (hf.maxRadius - hf.radius) * progress;
           const curA = (hf.life / hf.maxLife) * hf.alpha;
 
-          ctx.strokeStyle = `rgba(37, 99, 235, ${curA})`;
+          ctx.strokeStyle = `rgba(108, 196, 255, ${curA})`;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(hf.x, hf.y, curR, 0, Math.PI * 2);
           ctx.stroke();
         }
 
-        // Sparks (Clean flat dots, no glow)
+        // Sparks
         for (let i = sparks.length - 1; i >= 0; i--) {
           const spk = sparks[i];
           spk.life -= dt;
@@ -554,7 +560,7 @@ export default function SkyBackground() {
           spk.vy += 90 * dt;
           const spkA = (spk.life / spk.maxLife) * spk.alpha;
 
-          ctx.fillStyle = spk.color === '#2563EB' ? `rgba(37, 99, 235, ${spkA})` : `rgba(245, 158, 11, ${spkA})`;
+          ctx.fillStyle = spk.color === '#6CC4FF' ? `rgba(108, 196, 255, ${spkA})` : `rgba(66, 165, 245, ${spkA})`;
           ctx.beginPath();
           ctx.arc(spk.x, spk.y, spk.size, 0, Math.PI * 2);
           ctx.fill();
@@ -668,7 +674,7 @@ export default function SkyBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-white"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#07111C]"
       style={{
         width: '100vw',
         height: '100vh',
