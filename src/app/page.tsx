@@ -80,7 +80,7 @@ export default function HomePage() {
 
       {/* 2. YARIŞMALARIMIZ & PROJELERİMİZ BÖLÜMÜ */}
       <section id="projeler" className="site-container scroll-mt-24 space-y-10">
-        <div className="max-w-3xl space-y-3">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight">
             Katıldığımız Yarışmalar & Projeler
           </h2>
@@ -98,7 +98,7 @@ export default function HomePage() {
             return (
               <div
                 key={proje.id}
-                className={`flex flex-col justify-between space-y-6 ${
+                className={`flex flex-col space-y-4 ${
                   isFirst
                     ? 'md:pr-10 lg:pr-14'
                     : 'md:pl-10 lg:pl-14 pt-8 md:pt-0 border-t md:border-t-0 md:border-l border-[#1B3A52]'
@@ -131,17 +131,6 @@ export default function HomePage() {
                   <p className="text-base sm:text-lg text-[#A8B4C2] leading-relaxed font-normal">
                     {proje.ozet}
                   </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {proje.etiketler.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2.5 py-1 rounded text-xs font-medium text-[#A8B4C2] bg-[#0B1826] border border-[#1B3A52]/60"
-                    >
-                      {tag}
-                    </span>
-                  ))}
                 </div>
               </div>
             );
@@ -197,7 +186,7 @@ export default function HomePage() {
 
       {/* 4. ARAMIZA KATILIN & GOOGLE FORMS BAŞVURU BÖLÜMÜ */}
       <section id="katil" className="site-container scroll-mt-24 space-y-10">
-        <div className="max-w-3xl space-y-3">
+        <div className="max-w-3xl mx-auto text-center space-y-3">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight leading-tight">
             Tulpar Takımına Katılın
           </h2>
@@ -240,7 +229,7 @@ export default function HomePage() {
         </div>
 
         {/* Aksiyon Butonları */}
-        <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href={katilim.googleFormsUrl}
             target="_blank"
