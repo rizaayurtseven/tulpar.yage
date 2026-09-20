@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Globe } from 'lucide-react';
 import { siteData } from '@/data/site';
-import { LinkedinIcon } from '@/components/Icons';
+import { LinkedinIcon, InstagramIcon, LinktreeIcon } from '@/components/Icons';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -62,27 +62,71 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Sütun 3: Doğrulanmış İletişim */}
-          <div>
-            <h3 className="text-lg font-bold text-[#F2F6FA] mb-4">İletişim & Sosyal Bağlantı</h3>
-            <div className="space-y-4 text-base">
-              {iletisim.linkedin ? (
-                <div className="space-y-2">
-                  <span className="text-xs text-[#A8B4C2] block uppercase tracking-wider font-semibold">
-                    Resmi İletişim Kanalı
-                  </span>
+          {/* Sütun 3: Doğrulanmış İletişim & Sosyal Bağlantılar */}
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-[#F2F6FA]">Tulpar İletişim</h3>
+              <div className="flex flex-col sm:flex-row flex-wrap gap-2.5">
+                {iletisim.linkedin && (
                   <a
                     href={iletisim.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-sm font-semibold"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold"
                   >
-                    <LinkedinIcon className="h-4 w-4" />
-                    <span>LinkedIn Şirket Sayfamız</span>
-                    <ExternalLink className="h-3.5 w-3.5 opacity-70" />
+                    <LinkedinIcon className="h-3.5 w-3.5" />
+                    <span>LinkedIn</span>
+                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto" />
                   </a>
-                </div>
-              ) : null}
+                )}
+                {iletisim.instagram && (
+                  <a
+                    href={iletisim.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold"
+                  >
+                    <InstagramIcon className="h-3.5 w-3.5" />
+                    <span>@gazi.tulparr</span>
+                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto" />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-2.5">
+              <span className="text-xs text-[#A8B4C2] block uppercase tracking-wider font-semibold">
+                Gazi YAGE Bağlantıları
+              </span>
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="https://gaziyage.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                >
+                  <Globe className="h-3 w-3 text-[#42A5F5]" />
+                  <span>gaziyage.org</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/gaziyage/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                >
+                  <InstagramIcon className="h-3 w-3 text-[#6CC4FF]" />
+                  <span>@gaziyage</span>
+                </a>
+                <a
+                  href="https://tr.ee/RYyds66azK"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                >
+                  <LinktreeIcon className="h-3 w-3 text-emerald-400" />
+                  <span>Linktree</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

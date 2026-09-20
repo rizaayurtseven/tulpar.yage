@@ -8,10 +8,11 @@ import {
   Coins, 
   FileText, 
   ExternalLink,
-  CheckCircle2
+  CheckCircle2,
+  Globe
 } from 'lucide-react';
 import { siteData } from '@/data/site';
-import { LinkedinIcon } from '@/components/Icons';
+import { LinkedinIcon, InstagramIcon, LinktreeIcon } from '@/components/Icons';
 
 export default function HomePage() {
   const { takim, yarismalar, paydaslar, katilim, iletisim } = siteData;
@@ -152,14 +153,16 @@ export default function HomePage() {
 
           <div className="flex flex-wrap items-center justify-center gap-10 sm:gap-20 pt-2">
             {paydaslar.map((paydas) => (
-              <a
+              <div
                 key={paydas.id}
-                href={paydas.url || '#'}
-                target={paydas.url ? '_blank' : undefined}
-                rel="noopener noreferrer"
-                className="group flex flex-col items-center space-y-4 focus:outline-none"
+                className="group flex flex-col items-center space-y-4"
               >
-                <div className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-2xl p-4 flex items-center justify-center bg-[#102235] border border-[#1B3A52] group-hover:border-[#42A5F5] transition-colors">
+                <a
+                  href={paydas.url || '#'}
+                  target={paydas.url ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-2xl p-4 flex items-center justify-center bg-[#102235] border border-[#1B3A52] group-hover:border-[#42A5F5] transition-colors"
+                >
                   <Image
                     src={paydas.logo}
                     alt={paydas.ad}
@@ -167,18 +170,60 @@ export default function HomePage() {
                     height={120}
                     className="object-contain max-h-full max-w-full"
                   />
-                </div>
-                <div className="text-center">
-                  <span className="text-base sm:text-lg font-semibold text-[#F2F6FA] group-hover:text-[#6CC4FF] transition-colors block">
+                </a>
+                <div className="text-center flex flex-col items-center">
+                  <a
+                    href={paydas.url || '#'}
+                    target={paydas.url ? '_blank' : undefined}
+                    rel="noopener noreferrer"
+                    className="text-base sm:text-lg font-semibold text-[#F2F6FA] group-hover:text-[#6CC4FF] transition-colors block"
+                  >
                     {paydas.ad}
-                  </span>
+                  </a>
                   {paydas.altAd && (
                     <span className="text-xs text-[#A8B4C2] max-w-[200px] block mt-1">
                       {paydas.altAd}
                     </span>
                   )}
+                  {(paydas.instagram || paydas.linktree) && (
+                    <div className="flex items-center justify-center gap-2 pt-2.5 flex-wrap">
+                      {paydas.url && (
+                        <a
+                          href={paydas.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium text-[#A8B4C2] hover:text-[#6CC4FF] bg-[#0B1826] border border-[#1B3A52] hover:border-[#42A5F5] transition-colors"
+                        >
+                          <Globe className="h-3 w-3 text-[#42A5F5]" />
+                          <span>Web</span>
+                        </a>
+                      )}
+                      {paydas.instagram && (
+                        <a
+                          href={paydas.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium text-[#A8B4C2] hover:text-[#6CC4FF] bg-[#0B1826] border border-[#1B3A52] hover:border-[#42A5F5] transition-colors"
+                        >
+                          <InstagramIcon className="h-3 w-3 text-[#6CC4FF]" />
+                          <span>Instagram</span>
+                        </a>
+                      )}
+                      {paydas.linktree && (
+                        <a
+                          href={paydas.linktree}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium text-[#A8B4C2] hover:text-[#6CC4FF] bg-[#0B1826] border border-[#1B3A52] hover:border-[#42A5F5] transition-colors"
+                        >
+                          <LinktreeIcon className="h-3 w-3 text-emerald-400" />
+                          <span>Linktree</span>
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </section>
@@ -229,7 +274,7 @@ export default function HomePage() {
         </div>
 
         {/* Aksiyon Butonları */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
           <a
             href={katilim.googleFormsUrl}
             target="_blank"
@@ -246,10 +291,22 @@ export default function HomePage() {
               href={iletisim.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
+              className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
             >
               <LinkedinIcon className="h-5 w-5 text-[#42A5F5]" />
-              <span>LinkedIn ile İletişim</span>
+              <span>LinkedIn</span>
+            </a>
+          )}
+
+          {iletisim.instagram && (
+            <a
+              href={iletisim.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
+            >
+              <InstagramIcon className="h-5 w-5 text-[#6CC4FF]" />
+              <span>Instagram</span>
             </a>
           )}
         </div>

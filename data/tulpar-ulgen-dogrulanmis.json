@@ -46,7 +46,9 @@
       "ad": "Gazi YAGE",
       "altAd": "Yazılım Araştırma ve Geliştirme Topluluğu",
       "logo": "/images/yage-logo.png",
-      "url": "https://gaziyage.org"
+      "url": "https://gaziyage.org",
+      "instagram": "https://www.instagram.com/gaziyage/",
+      "linktree": "https://tr.ee/RYyds66azK"
     }
   ],
   "katilim": {
@@ -60,7 +62,7 @@
     "whatsapp": null,
     "konum": null,
     "linkedin": "https://www.linkedin.com/company/tulpar-ulgen",
-    "instagram": null,
+    "instagram": "https://www.instagram.com/gazi.tulparr/",
     "youtube": null,
     "github": null
   }

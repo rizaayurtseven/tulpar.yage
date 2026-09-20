@@ -21,6 +21,8 @@ export interface PaydasItem {
   altAd?: string;
   logo: string;
   url?: string;
+  instagram?: string;
+  linktree?: string;
 }
 
 export interface GalleryItem {
