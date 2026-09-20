@@ -45,13 +45,18 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/#ekip" className="hover:text-cyan-300 transition-colors">
-                  Ekibimiz
+                <a href="/#projeler" className="hover:text-cyan-300 transition-colors">
+                  Yarışmalar & Projeler
                 </a>
               </li>
               <li>
                 <a href="/#paydaslar" className="hover:text-cyan-300 transition-colors">
                   Paydaşlarımız
+                </a>
+              </li>
+              <li>
+                <a href="/#katil" className="hover:text-cyan-300 transition-colors">
+                  Aramıza Katılın
                 </a>
               </li>
             </ul>

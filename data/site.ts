@@ -1,36 +1,18 @@
 /**
- * TULPAR ÜLGEN - MERKEZİ VERİ ERİŞİM KATMANI
+ * TULPAR - MERKEZİ VERİ ERİŞİM KATMANI
  * 
  * Sitenin TEK VE MUTLAK VERİ KAYNAĞI: /data/tulpar-ulgen-dogrulanmis.json
- * Tüm sayfa ve bileşenler doğrudan doğrulanmış veriyi buradan tüketir.
  */
 
 import rawData from './tulpar-ulgen-dogrulanmis.json';
 
-export interface StatItem {
+export interface YarismaItem {
   id: string;
-  etiket: string;
-  deger: string;
-}
-
-export interface MilestoneItem {
-  id: number;
-  baslik: string;
-  tarih: string;
-  durum: 'tamamlandi' | 'devam-ediyor' | 'yaklasiyor';
-  not: string;
-  guncel?: boolean;
-}
-
-export interface TeamMember {
-  id: string;
-  isim: string;
-  rol?: string | null;
-  bolum?: string | null;
-  foto?: string | null;
-  biyografi?: string | null;
-  linkedin?: string | null;
-  github?: string | null;
+  ad: string;
+  kategori: string;
+  ozet: string;
+  etiketler: string[];
+  renk?: 'cyan' | 'amber' | string;
 }
 
 export interface PaydasItem {
@@ -46,73 +28,27 @@ export interface GalleryItem {
   url: string;
   placeholder?: string;
   alt: string;
-  kategori: string;
   baslik?: string;
   tarih?: string;
-}
-
-export interface UpdatePost {
-  id: string;
-  tarih: string;
-  baslik: string;
-  ozet: string;
-  etiket: string;
-}
-
-export interface SponsorPackage {
-  id: string;
-  ad: string;
-  kapsam: string[];
-  vurgulu?: boolean;
-}
-
-export interface SponsorItem {
-  id: string;
-  ad: string;
-  logo: string;
-  kategori: string;
-  url?: string;
+  kategori?: string;
 }
 
 export interface SiteData {
   takim: {
     ad: string;
+    tamAd?: string;
     okul: string;
     fakulte: string;
     bolum: string;
     sezon: string | null;
-    kategori: string | null;
-    slogan: string | null;
     logoPath: string | null;
   };
-  hero: {
-    gorsel: string | null;
-  };
-  metrikler: StatItem[] | null;
-  proje: {
-    ad: string | null;
-    ozet: string | null;
-    problem: string | null;
-    cozum: string | null;
-    teknikOzellikler: Array<{ id: string; parametre: string; deger: string; aciklama?: string }>;
-    teknolojiler: string[];
-    galeri: Array<{ id: string; url: string; baslik?: string; aciklama?: string }>;
-  } | null;
-  yolHaritasi: MilestoneItem[];
-  ekip: {
-    durum: string;
-    danisman: TeamMember | null;
-    kaptan: TeamMember | null;
-    uyeler: string[];
-  };
+  yarismalar: YarismaItem[];
   paydaslar: PaydasItem[];
-  galeri: GalleryItem[];
-  gelismeler: UpdatePost[];
-  sponsorluk: {
-    paketler: SponsorPackage[];
-    mevcutSponsorlar: SponsorItem[];
-    dosyaYolu: string | null;
-    nedenSponsor: Array<{ baslik: string; aciklama: string }>;
+  katilim: {
+    baslik: string;
+    aciklama: string;
+    googleFormsUrl: string;
   };
   iletisim: {
     eposta: string | null;
@@ -127,38 +63,23 @@ export interface SiteData {
   };
 }
 
-// Navigasyon sadece dolu/aktif sayfa ve bölümlerden oluşur
+// Navigasyon
 const navigasyon = [
   { baslik: 'Giriş', href: '/' },
-  { baslik: 'Ekibimiz', href: '/#ekip' },
+  { baslik: 'Yarışmalar', href: '/#projeler' },
   { baslik: 'Paydaşlarımız', href: '/#paydaslar' },
+  { baslik: 'Aramıza Katılın', href: '/#katil' },
 ];
 
 export const siteData: SiteData = {
   takim: rawData.takim,
-  hero: rawData.hero,
-  metrikler: rawData.metrikler as StatItem[] | null,
-  proje: rawData.proje as SiteData['proje'],
-  yolHaritasi: (rawData.yolHaritasi || []) as MilestoneItem[],
-  ekip: {
-    durum: rawData.ekip.durum,
-    danisman: rawData.ekip.danisman as TeamMember | null,
-    kaptan: rawData.ekip.kaptan as TeamMember | null,
-    uyeler: rawData.ekip.uyeler,
-  },
-  paydaslar: ((rawData as any).paydaslar || []) as PaydasItem[],
-  galeri: (rawData.galeri || []) as GalleryItem[],
-  gelismeler: (rawData.gelismeler || []) as UpdatePost[],
-  sponsorluk: {
-    paketler: (rawData.sponsorluk?.paketler || []) as SponsorPackage[],
-    mevcutSponsorlar: (rawData.sponsorluk?.mevcutSponsorlar || []) as SponsorItem[],
-    dosyaYolu: rawData.sponsorluk?.dosyaYolu || null,
-    nedenSponsor: (rawData.sponsorluk?.nedenSponsor || []) as Array<{ baslik: string; aciklama: string }>,
-  },
+  yarismalar: (rawData.yarismalar || []) as YarismaItem[],
+  paydaslar: (rawData.paydaslar || []) as PaydasItem[],
+  katilim: rawData.katilim,
   iletisim: {
     ...rawData.iletisim,
     navigasyon,
-  }
+  },
 };
 
 export default siteData;

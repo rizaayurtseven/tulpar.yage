@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ExternalLink } from 'lucide-react';
+import { Menu, X, ExternalLink, FileText } from 'lucide-react';
 import { siteData } from '@/data/site';
 import { LinkedinIcon } from '@/components/Icons';
 
@@ -75,19 +75,15 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop Sağ Buton: Doğrulanmış İletişim (LinkedIn) */}
+          {/* Desktop Sağ Buton: Başvuru Yap */}
           <div className="hidden md:flex items-center gap-4">
-            {siteData.iletisim.linkedin && (
-              <a
-                href={siteData.iletisim.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:brightness-110 active:scale-[0.98] transition-all"
-              >
-                <LinkedinIcon className="h-4 w-4" aria-hidden="true" />
-                <span>İletişim</span>
-              </a>
-            )}
+            <a
+              href="#katil"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:brightness-110 active:scale-[0.98] transition-all"
+            >
+              <FileText className="h-4 w-4" aria-hidden="true" />
+              <span>Başvuru Yap</span>
+            </a>
           </div>
 
           {/* Mobil Menü Butonu */}
@@ -119,19 +115,16 @@ export default function Navbar() {
               </a>
             ))}
           </nav>
-          {siteData.iletisim.linkedin && (
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <a
-                href={siteData.iletisim.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30"
-              >
-                <LinkedinIcon className="h-4 w-4" aria-hidden="true" />
-                <span>LinkedIn ile İletişim</span>
-              </a>
-            </div>
-          )}
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <a
+              href="#katil"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30"
+            >
+              <FileText className="h-4 w-4" aria-hidden="true" />
+              <span>Başvuru Yap</span>
+            </a>
+          </div>
         </div>
       )}
     </header>

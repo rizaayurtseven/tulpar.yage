@@ -4,32 +4,28 @@ import React from 'react';
 import Image from 'next/image';
 import { 
   ArrowRight, 
-  Users, 
-  Handshake,
-  ExternalLink
+  Shield, 
+  Coins, 
+  Award, 
+  Handshake, 
+  FileText, 
+  ExternalLink,
+  Cpu,
+  Layers,
+  CheckCircle2
 } from 'lucide-react';
 import { siteData } from '@/data/site';
 import RadarHUD from '@/components/RadarHUD';
 import { LinkedinIcon } from '@/components/Icons';
 
-function getInitials(name: string): string {
-  return name
-    .split(' ')
-    .filter((n) => !n.startsWith('Doç.') && !n.startsWith('Dr.'))
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase();
-}
-
 export default function HomePage() {
-  const { takim, ekip, metrikler, proje, yolHaritasi, paydaslar, galeri, gelismeler, iletisim } = siteData;
+  const { takim, yarismalar, paydaslar, katilim, iletisim } = siteData;
 
-  // Hero alt başlığı: slogan null ise sadece okul/fakülte/bölüm gösterilir
-  const heroSubtitle = takim.slogan || `${takim.okul} ${takim.fakulte} ${takim.bolum}`;
+  const heroSubtitle = `${takim.okul} ${takim.fakulte} ${takim.bolum}`;
 
   return (
     <div className="flex flex-col gap-20 sm:gap-28 pb-16">
-      {/* 1. HERO BÖLÜMÜ (Yalnızca doğrulanmış veriler: Takım adı, okul/fakülte/bölüm ve TEKNOFEST) */}
+      {/* 1. HERO BÖLÜMÜ */}
       <section className="relative w-full overflow-hidden border-b border-white/10 bg-[#070B14]">
         {/* Arka plan radyal ışık ve ince nokta ızgarası */}
         <div className="absolute inset-0 z-0 pointer-events-none">
@@ -48,20 +44,14 @@ export default function HomePage() {
                 <span>{takim.okul}</span>
                 <span className="text-slate-500">•</span>
                 <span>TEKNOFEST {takim.sezon || ''}</span>
-                {takim.kategori && (
-                  <>
-                    <span className="text-slate-500">•</span>
-                    <span>{takim.kategori}</span>
-                  </>
-                )}
               </div>
 
-              {/* Başlık: Takım Adı ve Logo */}
+              {/* Başlık: Logo ve Takım Adı */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="relative h-14 w-14 sm:h-18 sm:w-18 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-[0_0_25px_rgba(34,211,238,0.25)] shrink-0 bg-[#1c283e]">
                     <Image
-                      src="/images/tulpar-logo.png"
+                      src={takim.logoPath || '/images/tulpar-logo.png'}
                       alt={takim.ad}
                       fill
                       className="object-cover"
@@ -79,21 +69,21 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* İki Aksiyon Butonu: Ekip (Keşfet) + Paydaşlarımız */}
+              {/* İki Aksiyon Butonu: Yarışmalar & Aramıza Katılın */}
               <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <a
-                  href="#ekip"
+                  href="#projeler"
                   className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:brightness-110 active:scale-[0.98] transition-all"
                 >
-                  <span>Ekibimizi Tanıyın</span>
+                  <span>Yarışmalarımız & Projeler</span>
                   <ArrowRight className="h-5 w-5" />
                 </a>
                 <a
-                  href="#paydaslar"
+                  href="#katil"
                   className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-bold bg-slate-900/80 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/10 active:scale-[0.98] transition-all shadow-sm"
                 >
-                  <Handshake className="h-5 w-5 text-cyan-400" />
-                  <span>Paydaşlarımız</span>
+                  <FileText className="h-5 w-5 text-cyan-400" />
+                  <span>Aramıza Katılın</span>
                 </a>
               </div>
             </div>
@@ -106,102 +96,72 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. RAKAM ŞERİDİ: metrikler veride null olduğu için tamamen gizlenir, veri eklenince otomatik render edilir */}
-      {metrikler && metrikler.length > 0 && (
-        <section className="site-container -mt-14 sm:-mt-16 relative z-20">
-          <div className="p-6 sm:p-8 bg-[#0B1220]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {metrikler.map((stat, idx) => (
-                <div key={stat.id || idx} className="flex flex-col space-y-2 min-w-0">
-                  <span className="text-3xl sm:text-4xl font-black text-cyan-400 block truncate">
-                    {stat.deger}
-                  </span>
-                  <p className="text-sm text-slate-300 font-medium">
-                    {stat.etiket}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 3. PROJE BÖLÜMÜ: Veri doğrulanmadıkça / null iken tamamen gizlenir */}
-      {proje && (proje.ad || (proje.teknikOzellikler && proje.teknikOzellikler.length > 0)) && (
-        <section id="proje" className="site-container scroll-mt-24 space-y-12">
-          <div className="max-w-3xl space-y-4">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              {proje.ad || 'Proje Mimarisi'}
-            </h2>
-            {proje.ozet && (
-              <p className="text-lg text-slate-200 leading-relaxed">
-                {proje.ozet}
-              </p>
-            )}
-          </div>
-        </section>
-      )}
-
-      {/* 4. YOL HARİTASI BÖLÜMÜ: Boş dizi olduğunda tamamen gizlenir */}
-      {yolHaritasi && yolHaritasi.length > 0 && (
-        <section id="yol-haritasi" className="site-container scroll-mt-24 space-y-12">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-            Yol Haritası
-          </h2>
-        </section>
-      )}
-
-      {/* 5. EKİP BÖLÜMÜ (id="ekip") - TEYİT EDİLMELİ: Rol ve alt takım uydurmadan, yalnızca isimler sade kartlarla */}
-      <section id="ekip" className="site-container scroll-mt-24 space-y-12">
+      {/* 2. YARIŞMALARIMIZ & PROJELERİMİZ BÖLÜMÜ (id="projeler") */}
+      <section id="projeler" className="site-container scroll-mt-24 space-y-12">
         <div className="max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-400">
-            <Users className="h-4 w-4" />
-            <span>Takım Kadrosu</span>
+            <Award className="h-4 w-4" />
+            <span>TEKNOFEST Çalışmalarımız</span>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              {takim.ad} Ekibi
-            </h2>
-            {ekip.durum && (
-              <span className="inline-flex items-center self-start sm:self-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
-                {ekip.durum}
-              </span>
-            )}
-          </div>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Katıldığımız Yarışmalar & Projeler
+          </h2>
           <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-            {takim.okul} {takim.fakulte} {takim.bolum} bünyesinde TEKNOFEST çalışmalarını yürüten ekip üyelerimiz.
+            Tulpar Takımı bünyesinde TEKNOFEST kapsamında iki farklı ileri teknoloji alanında geliştirdiğimiz projelerimiz:
           </p>
         </div>
 
-        {/* Danışman ve Kaptan veride null olduğu için liderlik blokları gizlenir */}
-        {ekip.danisman && (
-          <div className="tech-card p-6 bg-[#0B172D] border-cyan-500/30">
-            <h3 className="text-xl font-bold text-white">Akademik Danışman: {(ekip.danisman as any).isim}</h3>
-          </div>
-        )}
-        {ekip.kaptan && (
-          <div className="tech-card p-6 bg-[#0B172D] border-cyan-500/30">
-            <h3 className="text-xl font-bold text-white">Takım Kaptanı: {(ekip.kaptan as any).isim}</h3>
-          </div>
-        )}
-
-        {/* 15 Üyenin Sade Kartları */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {ekip.uyeler.map((isim, idx) => {
-            const initials = getInitials(isim);
+        {/* 2 Yarışma Kartı: Tulpar Ülgen & Tulpar Payna */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          {yarismalar.map((proje) => {
+            const isCyan = proje.renk === 'cyan';
 
             return (
               <div
-                key={idx}
-                className="tech-card p-4 flex items-center gap-3.5 hover:border-cyan-500/40 transition-colors"
+                key={proje.id}
+                className={`tech-card p-8 sm:p-10 flex flex-col justify-between space-y-6 relative overflow-hidden transition-all duration-200 hover:-translate-y-1 ${
+                  isCyan
+                    ? 'border-cyan-500/40 bg-[#0B152A] hover:border-cyan-400/80 shadow-[0_0_30px_rgba(34,211,238,0.1)]'
+                    : 'border-amber-500/40 bg-[#141525] hover:border-amber-400/80 shadow-[0_0_30px_rgba(251,191,36,0.1)]'
+                }`}
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-500/30 bg-gradient-to-br from-cyan-950 to-blue-950 text-cyan-300 font-bold text-sm shrink-0 shadow-inner">
-                  {initials}
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-semibold text-white truncate">
-                    {isim}
+                <div className="space-y-4">
+                  {/* Kategori Rozeti */}
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border ${
+                        isCyan
+                          ? 'border-cyan-500/40 text-cyan-300 bg-cyan-500/10'
+                          : 'border-amber-500/40 text-amber-300 bg-amber-500/10'
+                      }`}
+                    >
+                      {isCyan ? <Shield className="h-3.5 w-3.5" /> : <Coins className="h-3.5 w-3.5" />}
+                      <span>{proje.kategori}</span>
+                    </span>
+                    <span className="text-xs text-slate-400 font-medium">TEKNOFEST</span>
+                  </div>
+
+                  {/* Proje Adı */}
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    {proje.ad}
                   </h3>
+
+                  {/* Açıklama */}
+                  <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
+                    {proje.ozet}
+                  </p>
+                </div>
+
+                {/* Etiketler */}
+                <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
+                  {proje.etiketler.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900/80 border border-white/10 text-slate-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
             );
@@ -209,10 +169,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. PAYDAŞLARIMIZ BÖLÜMÜ (id="paydaslar") - Görsel Tasarımla Tam Uyumlu */}
+      {/* 3. PAYDAŞLARIMIZ BÖLÜMÜ (id="paydaslar") */}
       {paydaslar && paydaslar.length > 0 && (
         <section id="paydaslar" className="site-container scroll-mt-24 space-y-12">
-          {/* Başlık ve İki Yandaki Zarif Çizgiler */}
+          {/* Başlık ve İki Yandaki Çizgiler */}
           <div className="flex flex-col items-center text-center space-y-4 max-w-3xl mx-auto">
             <div className="flex items-center justify-center gap-4 w-full">
               <div className="h-[1px] flex-1 max-w-[100px] sm:max-w-[160px] bg-gradient-to-r from-transparent to-white/40" />
@@ -263,40 +223,78 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 7. GALERİ & GELİŞMELER: Boş olduğunda gizlenir */}
-      {galeri && galeri.length > 0 && (
-        <section id="galeri" className="site-container scroll-mt-24 space-y-12">
-          <h2 className="text-3xl font-bold text-white">Galeri</h2>
-        </section>
-      )}
-
-      {/* 8. BÜYÜK GEÇİŞ / İLETİŞİM BANNERI */}
-      <section className="site-container">
-        <div className="p-8 sm:p-12 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0D172E] via-[#0B1428] to-[#070B14] border border-cyan-500/30 shadow-2xl">
-          <div className="max-w-3xl space-y-5 relative z-10">
+      {/* 4. ARAMIZA KATILIN & GOOGLE FORMS BAŞVURU BÖLÜMÜ (id="katil") */}
+      <section id="katil" className="site-container scroll-mt-24 space-y-10">
+        <div className="p-8 sm:p-14 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0B172F] via-[#0B1428] to-[#070B14] border-2 border-cyan-500/40 shadow-2xl space-y-8">
+          <div className="max-w-3xl space-y-4 relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-semibold">
-              <Handshake className="h-4 w-4" />
-              <span>İletişim & İş Birliği</span>
+              <FileText className="h-4 w-4" />
+              <span>{katilim.baslik}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-              Bizimle İletişime Geçin
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              Tulpar Takımına Katılın
             </h2>
-            <p className="text-base sm:text-lg text-slate-200 leading-relaxed">
-              Tulpar Ülgen takımımız, yarışma hazırlık süreçlerimiz ve iş birliği talepleriniz için resmi LinkedIn hesabımız üzerinden bize ulaşabilirsiniz.
+            <p className="text-lg sm:text-xl text-slate-200 leading-relaxed font-normal">
+              {katilim.aciklama}
             </p>
-            {iletisim.linkedin && (
-              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <a
-                  href={iletisim.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:brightness-110 active:scale-[0.98] transition-all"
-                >
-                  <LinkedinIcon className="h-5 w-5" />
-                  <span>LinkedIn Üzerinden İletişim</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+          </div>
+
+          {/* Çalışma Alanlarımız */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10">
+            <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="flex items-center gap-2 text-cyan-300 font-bold text-base">
+                <CheckCircle2 className="h-5 w-5 text-cyan-400 shrink-0" />
+                <span>Yazılım & Algoritma</span>
               </div>
+              <p className="text-sm text-slate-300">
+                Görüntü işleme, otonom hedef takip algoritmaları ve FinTech veri analitiği.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="flex items-center gap-2 text-amber-300 font-bold text-base">
+                <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
+                <span>Donanım & Aviyonik</span>
+              </div>
+              <p className="text-sm text-slate-300">
+                Gömülü Linux, gerçek zamanlı sensör haberleşmesi ve elektronik devre tasarımı.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="flex items-center gap-2 text-emerald-300 font-bold text-base">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+                <span>Mekanik & Tasarım</span>
+              </div>
+              <p className="text-sm text-slate-300">
+                CAD modelleme, kinematik analiz ve yarışma platformu üretim süreçleri.
+              </p>
+            </div>
+          </div>
+
+          {/* Google Forms Butonu */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 relative z-10">
+            <a
+              href={katilim.googleFormsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-9 py-4 rounded-xl text-base font-bold bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 text-white shadow-xl shadow-cyan-500/30 hover:brightness-110 active:scale-[0.98] transition-all"
+            >
+              <FileText className="h-5 w-5" />
+              <span>Google Forms ile Başvuru Yap</span>
+              <ExternalLink className="h-4 w-4" />
+            </a>
+
+            {iletisim.linkedin && (
+              <a
+                href={iletisim.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl text-base font-semibold bg-slate-900 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/10 transition-all"
+              >
+                <LinkedinIcon className="h-5 w-5" />
+                <span>LinkedIn ile İletişim</span>
+              </a>
             )}
           </div>
         </div>

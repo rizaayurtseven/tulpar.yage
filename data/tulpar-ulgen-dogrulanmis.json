@@ -1,68 +1,39 @@
 {
   "takim": {
-    "ad": "Tulpar Ülgen",
+    "ad": "Tulpar",
+    "tamAd": "Tulpar Takımı",
     "okul": "Gazi Üniversitesi",
     "fakulte": "Teknoloji Fakültesi",
     "bolum": "Bilgisayar Mühendisliği",
     "sezon": "2026",
-    "kategori": null,
-    "slogan": null,
     "logoPath": "/images/tulpar-logo.png"
   },
-  "hero": {
-    "gorsel": null
-  },
-  "metrikler": null,
-  "proje": {
-    "ad": null,
-    "ozet": null,
-    "problem": null,
-    "cozum": null,
-    "teknikOzellikler": [],
-    "teknolojiler": [],
-    "galeri": []
-  },
-  "yolHaritasi": [],
-  "ekip": {
-    "durum": "TEYİT EDİLMELİ",
-    "danisman": null,
-    "kaptan": null,
-    "uyeler": [
-      "Rıza Yurtseven",
-      "Berkay Köklü",
-      "Fuat Efe Özdemir",
-      "Mertcan Hırlak",
-      "Zeynep Başaran",
-      "Mehmet Fatih Ekici",
-      "Sude Özbay",
-      "Kübra Topcu",
-      "Beiza Achmet",
-      "Adem Halit Karagöz",
-      "Zeynep Baykan",
-      "Batuhan Bozkaya",
-      "Esra Karakaş",
-      "Azranur Yanık",
-      "Eylül Dilsiz"
-    ]
-  },
-  "galeri": [],
-  "gelismeler": [],
-  "sponsorluk": {
-    "paketler": [],
-    "mevcutSponsorlar": [],
-    "dosyaYolu": null,
-    "nedenSponsor": []
-  },
-  "iletisim": {
-    "eposta": null,
-    "telefon": null,
-    "whatsapp": null,
-    "konum": null,
-    "linkedin": "https://www.linkedin.com/company/tulpar-ulgen",
-    "instagram": null,
-    "youtube": null,
-    "github": null
-  },
+  "yarismalar": [
+    {
+      "id": "tulpar-ulgen",
+      "ad": "Tulpar Ülgen",
+      "kategori": "Hava Savunma Sistemleri (HSS) - Çelikkubbe",
+      "ozet": "Otonom hava savunma, elektro-optik hedef tespit, kilitlenme ve dinamik izleme teknolojileri üzerine geliştirilen mühendislik projemiz.",
+      "etiketler": [
+        "HSS Çelikkubbe",
+        "Otonom Takip",
+        "Savunma Teknolojileri"
+      ],
+      "renk": "cyan"
+    },
+    {
+      "id": "tulpar-payna",
+      "ad": "Tulpar Payna",
+      "kategori": "Finansal Teknolojiler",
+      "ozet": "Finansal teknolojiler alanında yenilikçi, güvenli işlem ve veri analitiği çözümleri geliştiren proje ekibimiz.",
+      "etiketler": [
+        "Finansal Teknolojiler",
+        "FinTech",
+        "Veri Analitiği"
+      ],
+      "renk": "amber"
+    }
+  ],
   "paydaslar": [
     {
       "id": "gazi",
@@ -77,5 +48,20 @@
       "logo": "/images/yage-logo.png",
       "url": "https://yagi.gazi.edu.tr"
     }
-  ]
+  ],
+  "katilim": {
+    "baslik": "Aramıza Katılın",
+    "aciklama": "Gazi Üniversitesi bünyesinde TEKNOFEST yarışmalarına hazırlanan Tulpar takımımızda yer almak ve projelerimize katkı sağlamak için başvuru formunu doldurabilirsiniz.",
+    "googleFormsUrl": "https://forms.google.com"
+  },
+  "iletisim": {
+    "eposta": null,
+    "telefon": null,
+    "whatsapp": null,
+    "konum": null,
+    "linkedin": "https://www.linkedin.com/company/tulpar-ulgen",
+    "instagram": null,
+    "youtube": null,
+    "github": null
+  }
 }
