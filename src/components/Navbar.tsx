@@ -30,8 +30,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-200 ${
         isScrolled
-          ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm'
-          : 'bg-white/75 backdrop-blur-sm border-b border-slate-200/50'
+          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs'
+          : 'bg-white/80 backdrop-blur-sm border-b border-transparent'
       }`}
     >
       <div className="site-container">
@@ -42,7 +42,7 @@ export default function Navbar() {
             className="flex items-center gap-3.5 group focus:outline-none"
             aria-label="Tulpar Ülgen Ana Sayfa"
           >
-            <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-blue-200 shadow-xs group-hover:border-blue-500 group-hover:shadow-md transition-all shrink-0 bg-white">
+            <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-white">
               <Image
                 src="/images/tulpar-logo.png"
                 alt={siteData.takim.ad}
@@ -67,18 +67,18 @@ export default function Navbar() {
               <a
                 key={item.href}
                 href={item.href}
-                className="px-4 py-2.5 rounded-lg text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-100/80 transition-all duration-150"
+                className="px-4 py-2 rounded-lg text-base font-medium text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-colors"
               >
                 <span>{item.baslik}</span>
               </a>
             ))}
           </nav>
 
-          {/* Desktop Sağ Buton: Başvuru Yap */}
+          {/* Desktop Sağ Buton: Başvuru Yap (Düz ve Parlamasız) */}
           <div className="hidden md:flex items-center gap-4">
             <a
               href="#katil"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 hover:brightness-105 active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>Başvuru Yap</span>
@@ -101,14 +101,14 @@ export default function Navbar() {
 
       {/* Mobil Drawer */}
       {isOpen && (
-        <div className="md:hidden border-b border-slate-200 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200 shadow-xl">
-          <nav className="flex flex-col space-y-1.5">
+        <div className="md:hidden border-b border-slate-200 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200">
+          <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-100 hover:text-blue-600 transition-colors"
+                className="px-4 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors"
               >
                 <span>{item.baslik}</span>
               </a>
@@ -118,7 +118,7 @@ export default function Navbar() {
             <a
               href="#katil"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-semibold bg-blue-600 text-white"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>Başvuru Yap</span>
