@@ -178,8 +178,8 @@ export default function ApplicationForm() {
         <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-[#6CC4FF]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center space-y-4">
-          <div className="h-16 w-16 rounded-2xl bg-[#42A5F5]/10 border border-[#42A5F5]/30 flex items-center justify-center text-[#42A5F5]">
-            <CheckCircle2 className="h-10 w-10" />
+          <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-[#42A5F5]/10 border border-[#42A5F5]/30 flex items-center justify-center text-[#42A5F5]">
+            <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10" />
           </div>
 
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-widest text-[#6CC4FF] bg-[#07111C] border border-[#1B3A52]">
@@ -187,42 +187,42 @@ export default function ApplicationForm() {
             BAŞVURUNUZ ALINDI
           </span>
 
-          <h3 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F2F6FA] tracking-tight text-center">
             Aday Havuzumuza Hoş Geldin, {formData.adSoyad.split(' ')[0]}! 🚀
           </h3>
 
-          <p className="text-base sm:text-lg text-[#A8B4C2] leading-relaxed max-w-xl font-normal">
+          <p className="text-sm sm:text-base md:text-lg text-[#A8B4C2] leading-relaxed max-w-xl font-normal text-center">
             Tulpar TEKNOFEST takımımıza gösterdiğin ilgi için teşekkür ederiz. Başvurun başarıyla kaydedildi; ekibimiz başvurunu değerlendirdikten sonra belirttiğin iletişim bilgileri üzerinden seninle iletişime geçecektir.
           </p>
 
-          <div className="w-full max-w-md bg-[#07111C] border border-[#1B3A52] rounded-xl p-4 text-left space-y-2 text-xs text-[#A8B4C2] mt-4">
-            <div className="flex justify-between border-b border-[#1B3A52]/60 pb-1.5">
-              <span className="text-[#A8B4C2]/70">Bölüm & Sınıf:</span>
-              <span className="font-semibold text-[#F2F6FA]">{formData.bolum} ({formData.sinif}. Sınıf)</span>
+          <div className="w-full max-w-md bg-[#07111C] border border-[#1B3A52] rounded-xl p-3.5 sm:p-4 text-left space-y-2 text-xs sm:text-sm mt-2">
+            <div className="flex justify-between items-center gap-2 border-b border-[#1B3A52]/60 pb-1.5">
+              <span className="text-[#A8B4C2]/70 shrink-0">Bölüm & Sınıf:</span>
+              <span className="font-semibold text-[#F2F6FA] truncate text-right">{formData.bolum} ({formData.sinif}. Sınıf)</span>
             </div>
-            <div className="flex justify-between border-b border-[#1B3A52]/60 pb-1.5">
-              <span className="text-[#A8B4C2]/70">İletişim:</span>
-              <span className="font-semibold text-[#F2F6FA]">{formData.eposta}</span>
+            <div className="flex justify-between items-center gap-2 border-b border-[#1B3A52]/60 pb-1.5">
+              <span className="text-[#A8B4C2]/70 shrink-0">İletişim:</span>
+              <span className="font-semibold text-[#F2F6FA] truncate text-right">{formData.eposta}</span>
             </div>
-            <div className="flex justify-between pt-0.5">
-              <span className="text-[#A8B4C2]/70">İlgi Alanları:</span>
-              <span className="font-semibold text-[#6CC4FF] text-right max-w-[200px] truncate">
+            <div className="flex justify-between items-center gap-2 pt-0.5">
+              <span className="text-[#A8B4C2]/70 shrink-0">İlgi Alanları:</span>
+              <span className="font-semibold text-[#6CC4FF] text-right truncate max-w-[60%]">
                 {formData.alanlar.join(', ')}
               </span>
             </div>
           </div>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
+          <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full sm:w-auto">
             <button
               onClick={handleReset}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold bg-[#102235] hover:bg-[#07111C] text-[#F2F6FA] border border-[#1B3A52] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold bg-[#102235] hover:bg-[#07111C] text-[#F2F6FA] border border-[#1B3A52] transition-colors w-full sm:w-auto"
             >
               <RotateCcw className="h-4 w-4 text-[#42A5F5]" />
               <span>Yeni Başvuru Yap</span>
             </button>
             <a
-              href="#projeler"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
+              href="/#projeler"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors w-full sm:w-auto"
             >
               <span>Projelerimizi İncele</span>
             </a>
@@ -233,30 +233,30 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#0B1826] border border-[#1B3A52] p-6 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#0B1826] border border-[#1B3A52] p-4 sm:p-8 lg:p-12 shadow-2xl relative overflow-hidden">
       {/* Arka Plan Işık Efektleri */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-[#42A5F5]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#6CC4FF]/5 rounded-full blur-3xl pointer-events-none" />
 
       {/* Form Başlık & Açıklama */}
-      <div className="relative z-10 space-y-4 mb-10 pb-8 border-b border-[#1B3A52]">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#6CC4FF] bg-[#07111C] border border-[#1B3A52]">
-          <span className="h-2 w-2 rounded-full bg-[#42A5F5]" />
+      <div className="relative z-10 space-y-3 sm:space-y-4 mb-8 sm:mb-10 pb-6 sm:pb-8 border-b border-[#1B3A52]">
+        <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-mono uppercase tracking-wider text-[#6CC4FF] bg-[#07111C] border border-[#1B3A52] max-w-full flex-wrap">
+          <span className="h-2 w-2 rounded-full bg-[#42A5F5] shrink-0" />
           <span>TEKNOFEST 2026 • ADAY HAVUZU</span>
         </div>
 
-        <h3 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F2F6FA] tracking-tight">
           TEKNOFEST Takım Üyesi İlgi Formu
         </h3>
 
-        <p className="text-base sm:text-lg text-[#A8B4C2] leading-relaxed max-w-2xl font-normal">
+        <p className="text-sm sm:text-base md:text-lg text-[#A8B4C2] leading-relaxed max-w-2xl font-normal">
           TEKNOFEST projelerimizde yer almak, yeni teknolojiler öğrenmek ve takımımızla birlikte proje geliştirmek ister misin?
           Formu doldurarak aday havuzumuza katılabilirsin. <span className="text-[#6CC4FF] font-semibold">Deneyim şart değil! 🚀</span>
         </p>
       </div>
 
       {/* Form Gövdesi */}
-      <form onSubmit={handleSubmit} className="relative z-10 space-y-10">
+      <form onSubmit={handleSubmit} className="relative z-10 space-y-8 sm:space-y-10">
         {/* Hata Bildirimi */}
         {errorMessage && (
           <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-3 animate-fade-in">
@@ -313,7 +313,7 @@ export default function ApplicationForm() {
                 <span>Kaçıncı sınıftasın? <span className="text-[#42A5F5]">*</span></span>
                 <span className="text-xs text-[#A8B4C2] font-normal font-mono">Zorunlu</span>
               </label>
-              <div className="grid grid-cols-6 gap-1.5">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {SINIF_OPTIONS.map((opt) => {
                   const isSelected = formData.sinif === opt;
                   return (
@@ -321,7 +321,7 @@ export default function ApplicationForm() {
                       key={opt}
                       type="button"
                       onClick={() => setFormData({ ...formData, sinif: opt })}
-                      className={`py-3 text-xs sm:text-sm font-semibold rounded-xl border text-center transition-all ${
+                      className={`py-3 px-2 text-xs sm:text-sm font-semibold rounded-xl border text-center transition-all flex items-center justify-center min-h-[44px] ${
                         isSelected
                           ? 'bg-[#42A5F5]/20 border-[#42A5F5] text-[#6CC4FF] ring-1 ring-[#42A5F5]'
                           : 'bg-[#07111C] border-[#1B3A52] text-[#A8B4C2] hover:text-[#F2F6FA] hover:border-[#42A5F5]/50'
@@ -347,7 +347,7 @@ export default function ApplicationForm() {
                   placeholder="05XX XXX XX XX"
                   value={formData.telefon}
                   onChange={(e) => setFormData({ ...formData, telefon: e.target.value })}
-                  className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base"
+                  className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base min-h-[48px]"
                 />
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function ApplicationForm() {
                 placeholder="ornek@gazi.edu.tr veya ornek@gmail.com"
                 value={formData.eposta}
                 onChange={(e) => setFormData({ ...formData, eposta: e.target.value })}
-                className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base"
+                className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base min-h-[48px]"
               />
             </div>
           </div>
@@ -388,7 +388,7 @@ export default function ApplicationForm() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2.5 pt-1">
+            <div className="flex flex-wrap gap-2 sm:gap-2.5 pt-1">
               {ALANLAR_OPTIONS.map((alan) => {
                 const isSelected = formData.alanlar.includes(alan);
                 return (
@@ -396,20 +396,20 @@ export default function ApplicationForm() {
                     key={alan}
                     type="button"
                     onClick={() => toggleAlan(alan)}
-                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium border transition-all ${
+                    className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium border text-left transition-all max-w-full min-h-[44px] ${
                       isSelected
                         ? 'bg-[#42A5F5]/20 border-[#42A5F5] text-[#6CC4FF] shadow-sm shadow-[#42A5F5]/10'
                         : 'bg-[#07111C] border-[#1B3A52] text-[#A8B4C2] hover:text-[#F2F6FA] hover:border-[#42A5F5]/40'
                     }`}
                   >
-                    <span className={`h-4 w-4 rounded-md flex items-center justify-center border text-[10px] ${
+                    <span className={`h-4 w-4 shrink-0 rounded-md flex items-center justify-center border text-[10px] ${
                       isSelected
                         ? 'bg-[#42A5F5] border-[#42A5F5] text-[#07111C] font-bold'
                         : 'border-[#1B3A52] bg-[#0B1826]'
                     }`}>
                       {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
                     </span>
-                    <span>{alan}</span>
+                    <span className="break-words leading-tight">{alan}</span>
                   </button>
                 );
               })}
@@ -423,7 +423,7 @@ export default function ApplicationForm() {
                   placeholder="İlgilendiğin diğer alanı belirtiniz..."
                   value={formData.digerAlan}
                   onChange={(e) => setFormData({ ...formData, digerAlan: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-[#07111C] border border-[#42A5F5]/60 text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-[#07111C] border border-[#42A5F5]/60 text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] text-sm min-h-[48px]"
                 />
               </div>
             )}
@@ -448,20 +448,20 @@ export default function ApplicationForm() {
                     key={item.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, deneyim: item.label })}
-                    className={`p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all ${
+                    className={`p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all min-h-[52px] ${
                       isSelected
                         ? 'bg-[#42A5F5]/15 border-[#42A5F5] text-[#F2F6FA] ring-1 ring-[#42A5F5]/40'
                         : 'bg-[#07111C] border-[#1B3A52] text-[#A8B4C2] hover:text-[#F2F6FA] hover:border-[#42A5F5]/40'
                     }`}
                   >
-                    <span className={`h-4 w-4 rounded-full border mt-1 shrink-0 flex items-center justify-center ${
+                    <span className={`h-4 w-4 rounded-full border mt-0.5 shrink-0 flex items-center justify-center ${
                       isSelected ? 'border-[#42A5F5] bg-[#42A5F5]' : 'border-[#1B3A52] bg-[#0B1826]'
                     }`}>
                       {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#07111C]" />}
                     </span>
                     <div className="space-y-0.5">
-                      <span className="text-sm font-semibold block text-[#F2F6FA]">{item.label}</span>
-                      <span className="text-xs text-[#A8B4C2] block">{item.desc}</span>
+                      <span className="text-xs sm:text-sm font-semibold block text-[#F2F6FA]">{item.label}</span>
+                      <span className="text-[11px] sm:text-xs text-[#A8B4C2] block leading-relaxed">{item.desc}</span>
                     </div>
                   </button>
                 );
@@ -480,7 +480,7 @@ export default function ApplicationForm() {
               placeholder="Örn: Python, Arduino, SolidWorks, C++, React, STM32..."
               value={formData.teknolojiler}
               onChange={(e) => setFormData({ ...formData, teknolojiler: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base"
+              className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base min-h-[48px]"
             />
           </div>
         </div>
@@ -508,20 +508,20 @@ export default function ApplicationForm() {
                     key={item.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, aktifGorev: item.label })}
-                    className={`w-full p-4 rounded-xl border text-left flex items-start gap-3.5 transition-all ${
+                    className={`w-full p-3.5 sm:p-4 rounded-xl border text-left flex items-start gap-3 transition-all min-h-[52px] ${
                       isSelected
                         ? 'bg-[#42A5F5]/15 border-[#42A5F5] text-[#F2F6FA] ring-1 ring-[#42A5F5]/40'
                         : 'bg-[#07111C] border-[#1B3A52] text-[#A8B4C2] hover:text-[#F2F6FA] hover:border-[#42A5F5]/40'
                     }`}
                   >
-                    <span className={`h-4 w-4 rounded-full border mt-1 shrink-0 flex items-center justify-center ${
+                    <span className={`h-4 w-4 rounded-full border mt-0.5 shrink-0 flex items-center justify-center ${
                       isSelected ? 'border-[#42A5F5] bg-[#42A5F5]' : 'border-[#1B3A52] bg-[#0B1826]'
                     }`}>
                       {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-[#07111C]" />}
                     </span>
                     <div className="space-y-0.5">
-                      <span className="text-sm font-semibold block text-[#F2F6FA]">{item.label}</span>
-                      <span className="text-xs text-[#A8B4C2] block">{item.desc}</span>
+                      <span className="text-xs sm:text-sm font-semibold block text-[#F2F6FA]">{item.label}</span>
+                      <span className="text-[11px] sm:text-xs text-[#A8B4C2] block leading-relaxed">{item.desc}</span>
                     </div>
                   </button>
                 );
@@ -540,7 +540,7 @@ export default function ApplicationForm() {
               placeholder="Eklemek istediğin bir not, soru, proje fikri veya kendini tanıtmak istediğin ek detaylar..."
               value={formData.eklemekIstedikleriniz}
               onChange={(e) => setFormData({ ...formData, eklemekIstedikleriniz: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base resize-y"
+              className="w-full px-4 py-3.5 rounded-xl bg-[#07111C] border border-[#1B3A52] text-[#F2F6FA] placeholder-[#A8B4C2]/40 focus:outline-none focus:border-[#42A5F5] focus:ring-1 focus:ring-[#42A5F5] transition-colors text-sm sm:text-base resize-y min-h-[96px]"
             />
           </div>
         </div>
@@ -554,7 +554,7 @@ export default function ApplicationForm() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-xl text-base font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#42A5F5]/15"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl text-base font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#42A5F5]/15 min-h-[48px]"
           >
             {status === 'loading' ? (
               <>

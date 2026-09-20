@@ -39,10 +39,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3.5 group focus:outline-none"
+            className="flex items-center gap-3 sm:gap-3.5 group focus:outline-none min-w-0"
             aria-label="Tulpar Ülgen Ana Sayfa"
           >
-            <div className="relative h-11 w-11 rounded-xl overflow-hidden border border-[#1B3A52] shrink-0 bg-[#0B1826]">
+            <div className="relative h-10 w-10 sm:h-11 sm:w-11 rounded-xl overflow-hidden border border-[#1B3A52] shrink-0 bg-[#0B1826]">
               <Image
                 src="/images/tulpar-logo.png"
                 alt={siteData.takim.ad}
@@ -51,11 +51,11 @@ export default function Navbar() {
                 priority
               />
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-[#F2F6FA] group-hover:text-[#6CC4FF] transition-colors">
+            <div className="flex flex-col min-w-0">
+              <span className="text-lg sm:text-xl font-bold tracking-tight text-[#F2F6FA] group-hover:text-[#6CC4FF] transition-colors truncate">
                 {siteData.takim.ad}
               </span>
-              <span className="text-xs text-[#A8B4C2]">
+              <span className="text-[11px] sm:text-xs text-[#A8B4C2] truncate max-w-[160px] sm:max-w-none">
                 {siteData.takim.okul} • TEKNOFEST
               </span>
             </div>
@@ -77,7 +77,7 @@ export default function Navbar() {
           {/* Desktop Sağ Buton: Başvuru Yap */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href="#katil"
+              href="/#katil"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
@@ -89,7 +89,7 @@ export default function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 rounded-lg text-[#A8B4C2] hover:text-[#F2F6FA] hover:bg-[#0B1826] transition-colors"
+              className="p-2.5 rounded-xl text-[#A8B4C2] hover:text-[#F2F6FA] hover:bg-[#0B1826] border border-transparent hover:border-[#1B3A52] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label={isOpen ? 'Menüyü kapat' : 'Menüyü aç'}
               aria-expanded={isOpen}
             >
@@ -101,14 +101,14 @@ export default function Navbar() {
 
       {/* Mobil Drawer */}
       {isOpen && (
-        <div className="md:hidden border-b border-[#1B3A52] bg-[#0B1826]/95 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-b border-[#1B3A52] bg-[#0B1826]/98 backdrop-blur-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200 shadow-xl">
           <nav className="flex flex-col space-y-1">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-3 rounded-lg text-base font-medium text-[#A8B4C2] hover:bg-[#102235] hover:text-[#6CC4FF] transition-colors"
+                className="px-4 py-3.5 rounded-xl text-base font-medium text-[#A8B4C2] hover:bg-[#102235] hover:text-[#6CC4FF] active:bg-[#102235] transition-colors flex items-center min-h-[48px]"
               >
                 <span>{item.baslik}</span>
               </a>
@@ -116,9 +116,9 @@ export default function Navbar() {
           </nav>
           <div className="mt-4 pt-4 border-t border-[#1B3A52]">
             <a
-              href="#katil"
+              href="/#katil"
               onClick={() => setIsOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-[#42A5F5] text-[#07111C]"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-base font-bold bg-[#42A5F5] text-[#07111C] shadow-lg shadow-[#42A5F5]/20 min-h-[48px]"
             >
               <FileText className="h-4 w-4" aria-hidden="true" />
               <span>Başvuru Yap</span>

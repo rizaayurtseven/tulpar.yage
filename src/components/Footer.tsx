@@ -72,11 +72,11 @@ export default function Footer() {
                     href={iletisim.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold min-h-[44px]"
                   >
-                    <LinkedinIcon className="h-3.5 w-3.5" />
+                    <LinkedinIcon className="h-4 w-4 shrink-0" />
                     <span>LinkedIn</span>
-                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto" />
+                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto shrink-0" />
                   </a>
                 )}
                 {iletisim.instagram && (
@@ -84,11 +84,11 @@ export default function Footer() {
                     href={iletisim.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold min-h-[44px]"
                   >
-                    <InstagramIcon className="h-3.5 w-3.5" />
+                    <InstagramIcon className="h-4 w-4 shrink-0" />
                     <span>@gazi.tulparr</span>
-                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto" />
+                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto shrink-0" />
                   </a>
                 )}
               </div>
@@ -103,27 +103,27 @@ export default function Footer() {
                   href="https://gaziyage.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
                 >
-                  <Globe className="h-3 w-3 text-[#42A5F5]" />
+                  <Globe className="h-3.5 w-3.5 text-[#42A5F5] shrink-0" />
                   <span>gaziyage.org</span>
                 </a>
                 <a
                   href="https://www.instagram.com/gaziyage/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
                 >
-                  <InstagramIcon className="h-3 w-3 text-[#6CC4FF]" />
+                  <InstagramIcon className="h-3.5 w-3.5 text-[#6CC4FF] shrink-0" />
                   <span>@gaziyage</span>
                 </a>
                 <a
                   href="https://tr.ee/RYyds66azK"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
                 >
-                  <LinktreeIcon className="h-3 w-3 text-emerald-400" />
+                  <LinktreeIcon className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                   <span>Linktree</span>
                 </a>
               </div>
@@ -132,7 +132,7 @@ export default function Footer() {
         </div>
 
         {/* Alt Telif Çizgisi */}
-        <div className="mt-12 pt-8 border-t border-[#1B3A52]/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[#A8B4C2]">
+        <div className="mt-12 pt-8 border-t border-[#1B3A52]/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#A8B4C2] text-center sm:text-left">
           <p>
             © {currentYear} {takim.ad} — {takim.okul} {takim.bolum}. Tüm hakları saklıdır.
           </p>

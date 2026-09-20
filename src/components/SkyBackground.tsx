@@ -676,16 +676,16 @@ export default function SkyBackground() {
       aria-hidden="true"
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#07111C]"
       style={{
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: '100%',
       }}
     >
       <canvas
         ref={canvasRef}
         className="block w-full h-full pointer-events-none"
         style={{
-          width: '100vw',
-          height: '100vh',
+          width: '100%',
+          height: '100%',
         }}
       />
     </div>
