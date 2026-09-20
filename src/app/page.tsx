@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { siteData } from '@/data/site';
 import { LinkedinIcon, InstagramIcon, LinktreeIcon } from '@/components/Icons';
+import ApplicationForm from '@/components/ApplicationForm';
 
 export default function HomePage() {
   const { takim, yarismalar, paydaslar, katilim, iletisim } = siteData;
@@ -229,8 +230,8 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* 4. ARAMIZA KATILIN & GOOGLE FORMS BAŞVURU BÖLÜMÜ */}
-      <section id="katil" className="site-container scroll-mt-24 space-y-10">
+      {/* 4. ARAMIZA KATILIN & TEKNOFEST TAKIM ÜYESİ İLGİ FORMU */}
+      <section id="katil" className="site-container scroll-mt-24 space-y-12">
         <div className="max-w-3xl mx-auto text-center space-y-3">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#F2F6FA] tracking-tight leading-tight">
             Tulpar Takımına Katılın
@@ -273,27 +274,24 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Aksiyon Butonları */}
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href={katilim.googleFormsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-base font-bold bg-[#42A5F5] hover:bg-[#6CC4FF] text-[#07111C] transition-colors"
-          >
-            <FileText className="h-5 w-5" />
-            <span>Google Forms ile Başvuru Yap</span>
-            <ExternalLink className="h-4 w-4" />
-          </a>
+        {/* Canlı Başvuru Formu (Google Form yerine direkt sitede) */}
+        <div className="pt-2">
+          <ApplicationForm />
+        </div>
 
+        {/* Sosyal Kanallardan İletişim */}
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
+          <span className="text-xs text-[#A8B4C2] font-mono uppercase tracking-wider block w-full text-center">
+            Resmi Sosyal Bağlantılarımız:
+          </span>
           {iletisim.linkedin && (
             <a
               href={iletisim.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
             >
-              <LinkedinIcon className="h-5 w-5 text-[#42A5F5]" />
+              <LinkedinIcon className="h-4 w-4 text-[#42A5F5]" />
               <span>LinkedIn</span>
             </a>
           )}
@@ -303,10 +301,10 @@ export default function HomePage() {
               href={iletisim.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl text-base font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-[#0B1826] hover:bg-[#102235] border border-[#1B3A52] text-[#F2F6FA] transition-colors"
             >
-              <InstagramIcon className="h-5 w-5 text-[#6CC4FF]" />
-              <span>Instagram</span>
+              <InstagramIcon className="h-4 w-4 text-[#6CC4FF]" />
+              <span>Instagram (@gazi.tulparr)</span>
             </a>
           )}
         </div>
