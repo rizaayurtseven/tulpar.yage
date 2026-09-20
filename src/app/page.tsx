@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-20 sm:gap-28 pb-16">
       {/* 1. HERO BÖLÜMÜ */}
-      <section className="relative w-full overflow-hidden border-b border-white/10 bg-[#070B14]">
+      <section className="relative w-full overflow-hidden border-b border-white/10 bg-[#070B14]/70 backdrop-blur-[2px]">
         {/* Arka plan radyal ışık ve ince nokta ızgarası */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[130px]" />
@@ -225,7 +225,7 @@ export default function HomePage() {
 
       {/* 4. ARAMIZA KATILIN & GOOGLE FORMS BAŞVURU BÖLÜMÜ (id="katil") */}
       <section id="katil" className="site-container scroll-mt-24 space-y-10">
-        <div className="p-8 sm:p-14 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0B172F] via-[#0B1428] to-[#070B14] border-2 border-cyan-500/40 shadow-2xl space-y-8">
+        <div className="p-8 sm:p-14 relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0B172F]/90 via-[#0B1428]/85 to-[#070B14]/90 backdrop-blur-md border-2 border-cyan-500/40 shadow-2xl space-y-8">
           <div className="max-w-3xl space-y-4 relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-semibold">
               <FileText className="h-4 w-4" />

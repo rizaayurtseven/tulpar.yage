@@ -10,7 +10,7 @@ export default function Footer() {
   const { takim, iletisim } = siteData;
 
   return (
-    <footer id="iletisim" className="border-t border-white/10 bg-[#05080f] text-slate-300 pt-16 pb-12 mt-20">
+    <footer id="iletisim" className="border-t border-white/10 bg-[#05080f]/85 backdrop-blur-md text-slate-300 pt-16 pb-12 mt-20">
       <div className="site-container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
           {/* Sütun 1: Takım ve Kurum Bilgisi */}
