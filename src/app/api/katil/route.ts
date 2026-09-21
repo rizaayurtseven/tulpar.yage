@@ -1,73 +1,104 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { NextResponse } from "next/server";
+import { google } from "googleapis";
 
-export async function POST(request: Request) {
+// Basit Memory-based Rate Limiter
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
+const RATE_LIMIT_MAX_REQUESTS = 3;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 dakika
+
+export async function POST(req: Request) {
   try {
-    const data = await request.json();
+    // IP Adresini al (Vercel başlıklarından)
+    const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown_ip";
 
-    // Required fields validation
-    if (
-      !data.adSoyad ||
-      !data.bolum ||
-      !data.sinif ||
-      !data.telefon ||
-      !data.eposta ||
-      !data.alanlar ||
-      data.alanlar.length === 0 ||
-      !data.aktifGorev
-    ) {
-      return NextResponse.json(
-        { error: 'Lütfen tüm zorunlu alanları doldurunuz.' },
-        { status: 400 }
-      );
-    }
+    // Rate Limiting Kontrolü
+    const now = Date.now();
+    const ipData = rateLimitMap.get(ip);
 
-    const submission = {
-      id: `tulpar-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
-      tarih: new Date().toISOString(),
-      adSoyad: String(data.adSoyad).trim(),
-      bolum: String(data.bolum).trim(),
-      sinif: String(data.sinif).trim(),
-      telefon: String(data.telefon).trim(),
-      eposta: String(data.eposta).trim(),
-      alanlar: Array.isArray(data.alanlar) ? data.alanlar : [data.alanlar],
-      digerAlan: data.digerAlan ? String(data.digerAlan).trim() : null,
-      deneyim: data.deneyim ? String(data.deneyim).trim() : 'Belirtilmedi',
-      teknolojiler: data.teknolojiler ? String(data.teknolojiler).trim() : null,
-      aktifGorev: String(data.aktifGorev).trim(),
-      eklemekIstedikleriniz: data.eklemekIstedikleriniz ? String(data.eklemekIstedikleriniz).trim() : null,
-    };
-
-    console.log('[TULPAR YENİ BAŞVURU]', JSON.stringify(submission, null, 2));
-
-    try {
-      const dataDir = path.join(process.cwd(), 'data');
-      if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
-      }
-      const filePath = path.join(dataDir, 'basvurular.json');
-      let currentSubmissions = [];
-      if (fs.existsSync(filePath)) {
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        try {
-          currentSubmissions = JSON.parse(fileContent);
-        } catch {
-          currentSubmissions = [];
+    if (ipData) {
+      if (now - ipData.timestamp < RATE_LIMIT_WINDOW_MS) {
+        if (ipData.count >= RATE_LIMIT_MAX_REQUESTS) {
+          return NextResponse.json({ error: "Çok fazla istek gönderdiniz. Lütfen daha sonra tekrar deneyin." }, { status: 429 });
         }
+        ipData.count++;
+      } else {
+        rateLimitMap.set(ip, { count: 1, timestamp: now });
       }
-      currentSubmissions.push(submission);
-      fs.writeFileSync(filePath, JSON.stringify(currentSubmissions, null, 2), 'utf8');
-    } catch (fsErr) {
-      console.warn('basvurular.json dosyasına yazılamadı (sunucusuz ortam için normal):', fsErr);
+    } else {
+      rateLimitMap.set(ip, { count: 1, timestamp: now });
     }
 
-    return NextResponse.json({ ok: true, message: 'Başvurunuz başarıyla kaydedildi.' });
+    const body = await req.json();
+    const {
+      adSoyad, bolum, sinif, telefon, eposta,
+      alanlar, digerAlan, deneyim, teknolojiler, aktifGorev, eklemekIstedikleriniz
+    } = body;
+
+    // Form Doğrulama
+    if (
+        !adSoyad || !bolum || !sinif || !telefon || !eposta || !aktifGorev ||
+        !alanlar || !Array.isArray(alanlar) || alanlar.length === 0
+    ) {
+      return NextResponse.json({ error: "Lütfen tüm zorunlu alanları doldurunuz." }, { status: 400 });
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(eposta)) {
+      return NextResponse.json({ error: "Geçerli bir e-posta adresi giriniz." }, { status: 400 });
+    }
+
+    // Çevre Değişkenleri Kontrolü
+    if (!process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_SPREADSHEET_ID) {
+      return NextResponse.json({ error: "Başvuru formu henüz kullanıma açık değil (API ayarları eksik)." }, { status: 503 });
+    }
+
+    // Google Yetkilendirmesi
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+
+    // Alanları aralarına virgül koyarak string'e çevir
+    const alanlarString = alanlar.join(", ");
+    const trTime = new Date().toLocaleString("tr-TR", { timeZone: "Europe/Istanbul" });
+
+    // Tabloya eklenecek veri dizisi (Sırasıyla Excel sütunları: A'dan L'ye)
+    const appendData = [
+      [
+        trTime,
+        String(adSoyad).trim(),
+        String(bolum).trim(),
+        String(sinif).trim(),
+        String(telefon).trim(),
+        String(eposta).trim(),
+        alanlarString,
+        digerAlan ? String(digerAlan).trim() : "-",
+        deneyim ? String(deneyim).trim() : "Belirtilmedi",
+        teknolojiler ? String(teknolojiler).trim() : "-",
+        String(aktifGorev).trim(),
+        eklemekIstedikleriniz ? String(eklemekIstedikleriniz).trim() : "-"
+      ]
+    ];
+
+    // Veriyi Sheets'e yazma
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.GOOGLE_SPREADSHEET_ID,
+      // Google Spreadsheet dosyasında "Tulpar" adında bir sayfa sekmesi olması zorunludur.
+      range: "Tulpar!A:L",
+      valueInputOption: "RAW",
+      requestBody: {
+        values: appendData,
+      },
+    });
+
+    return NextResponse.json({ success: true, message: "Başvurunuz başarıyla kaydedildi." }, { status: 200 });
+
   } catch (error) {
-    console.error('Başvuru hatası:', error);
-    return NextResponse.json(
-      { error: 'Bir hata oluştu, lütfen tekrar deneyiniz.' },
-      { status: 500 }
-    );
+    console.error("Sheets Hatası (Tulpar):", error);
+    return NextResponse.json({ error: "Sunucu hatası oluştu. Lütfen daha sonra tekrar deneyiniz." }, { status: 500 });
   }
 }
