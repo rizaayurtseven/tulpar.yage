@@ -1,13 +1,11 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
 import { 
   ArrowRight, 
   Shield, 
   Coins, 
   FileText, 
-  ExternalLink,
   CheckCircle2,
   Globe
 } from 'lucide-react';

@@ -9,14 +9,8 @@ import {
   Sparkles, 
   Check, 
   User, 
-  GraduationCap, 
-  Phone, 
-  Mail, 
   Layers, 
-  Award, 
-  Cpu, 
   Compass, 
-  MessageSquare,
   RotateCcw
 } from 'lucide-react';
 

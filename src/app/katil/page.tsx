@@ -1,5 +1,4 @@
-import React from 'react';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import ApplicationForm from '@/components/ApplicationForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
