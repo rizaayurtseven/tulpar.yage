@@ -1,144 +1,48 @@
-import Image from 'next/image';
-import { ExternalLink, Globe } from 'lucide-react';
-import { siteData } from '@/data/site';
-import { LinkedinIcon, InstagramIcon, LinktreeIcon } from '@/components/Icons';
+import Link from 'next/link';
+import { siteData } from '../data/site';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const { takim, iletisim } = siteData;
 
   return (
-    <footer id="iletisim" className="border-t border-[#1B3A52] bg-[#050C14] text-[#A8B4C2] pt-16 pb-12 mt-20">
-      <div className="site-container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
-          {/* Sütun 1: Takım ve Kurum Bilgisi */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 rounded-xl overflow-hidden border border-[#1B3A52] bg-[#0B1826] shrink-0">
-                <Image
-                  src="/images/tulpar-logo.png"
-                  alt={takim.ad}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <span className="text-xl font-bold text-[#F2F6FA] tracking-tight">
-                {takim.ad}
+      <footer className="border-t border-white/10 bg-black pt-16 pb-8">
+        <div className="site-container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+
+            <div className="flex flex-col gap-4">
+              <span className="text-2xl font-black tracking-tighter text-white uppercase leading-none">
+                {siteData.takim.ad}
               </span>
+              <p className="text-sm text-white/50 leading-relaxed max-w-sm mt-2">
+                Gazi Üniversitesi bünyesinde yarışmalara hazırlanan AR-GE ve mühendislik takımı.
+              </p>
             </div>
-            <div className="text-sm text-[#A8B4C2] space-y-1">
-              <p className="font-semibold text-[#F2F6FA]">{takim.okul}</p>
-              <p>{takim.fakulte}</p>
-              <p>{takim.bolum}</p>
+
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xs font-bold text-white/70 tracking-widest uppercase">Sayfalar</h3>
+              <ul className="flex flex-col gap-3 text-sm text-white/50">
+                <li><Link href="/" className="hover:text-white transition-colors">Ana Sayfa</Link></li>
+                <li><Link href="/#projeler" className="hover:text-white transition-colors">Projeler</Link></li>
+                <li><Link href="/duyurular" className="hover:text-white transition-colors">Duyurular</Link></li>
+                <li><Link href="/basvuru" className="hover:text-white transition-colors">Başvuru Formu</Link></li>
+              </ul>
             </div>
+
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xs font-bold text-white/70 tracking-widest uppercase">İletişim</h3>
+              <div className="flex flex-col gap-3 text-sm text-white/50">
+                <a href={siteData.iletisim.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+                <a href={siteData.iletisim.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
+                <a href={`mailto:${siteData.iletisim.eposta}`} className="hover:text-white transition-colors">{siteData.iletisim.eposta}</a>
+              </div>
+            </div>
+
           </div>
 
-          {/* Sütun 2: Navigasyon */}
-          <div>
-            <h3 className="text-lg font-bold text-[#F2F6FA] mb-4">Navigasyon</h3>
-            <ul className="space-y-2.5 text-base">
-              <li>
-                <a href="/" className="hover:text-[#6CC4FF] transition-colors">
-                  Giriş (Ana Sayfa)
-                </a>
-              </li>
-              <li>
-                <a href="/#projeler" className="hover:text-[#6CC4FF] transition-colors">
-                  Yarışmalar & Projeler
-                </a>
-              </li>
-              <li>
-                <a href="/#paydaslar" className="hover:text-[#6CC4FF] transition-colors">
-                  Paydaşlarımız
-                </a>
-              </li>
-              <li>
-                <a href="/#katil" className="hover:text-[#6CC4FF] transition-colors">
-                  Aramıza Katılın
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Sütun 3: Doğrulanmış İletişim & Sosyal Bağlantılar */}
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <h3 className="text-lg font-bold text-[#F2F6FA]">Tulpar İletişim</h3>
-              <div className="flex flex-col sm:flex-row flex-wrap gap-2.5">
-                {iletisim.linkedin && (
-                  <a
-                    href={iletisim.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold min-h-[44px]"
-                  >
-                    <LinkedinIcon className="h-4 w-4 shrink-0" />
-                    <span>LinkedIn</span>
-                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto shrink-0" />
-                  </a>
-                )}
-                {iletisim.instagram && (
-                  <a
-                    href={iletisim.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0B1826] border border-[#1B3A52] text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-semibold min-h-[44px]"
-                  >
-                    <InstagramIcon className="h-4 w-4 shrink-0" />
-                    <span>@gazi.tulparr</span>
-                    <ExternalLink className="h-3 w-3 opacity-60 ml-auto shrink-0" />
-                  </a>
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-2.5">
-              <span className="text-xs text-[#A8B4C2] block uppercase tracking-wider font-semibold">
-                Gazi YAGE Bağlantıları
-              </span>
-              <div className="flex flex-wrap gap-2">
-                <a
-                  href="https://gaziyage.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
-                >
-                  <Globe className="h-3.5 w-3.5 text-[#42A5F5] shrink-0" />
-                  <span>gaziyage.org</span>
-                </a>
-                <a
-                  href="https://www.instagram.com/gaziyage/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
-                >
-                  <InstagramIcon className="h-3.5 w-3.5 text-[#6CC4FF] shrink-0" />
-                  <span>@gaziyage</span>
-                </a>
-                <a
-                  href="https://tr.ee/RYyds66azK"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0B1826] border border-[#1B3A52] text-[#A8B4C2] hover:text-[#6CC4FF] hover:border-[#42A5F5] transition-colors text-xs font-medium min-h-[38px]"
-                >
-                  <LinktreeIcon className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                  <span>Linktree</span>
-                </a>
-              </div>
-            </div>
+          <div className="pt-8 border-t border-white/10 text-xs text-white/40 text-center md:text-left">
+            <p>© {currentYear} {siteData.takim.tamAd}. Tüm hakları saklıdır.</p>
           </div>
         </div>
-
-        {/* Alt Telif Çizgisi */}
-        <div className="mt-12 pt-8 border-t border-[#1B3A52]/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#A8B4C2] text-center sm:text-left">
-          <p>
-            © {currentYear} {takim.ad} — {takim.okul} {takim.bolum}. Tüm hakları saklıdır.
-          </p>
-          <p className="text-[#A8B4C2]">
-            TEKNOFEST {takim.sezon || ''}
-          </p>
-        </div>
-      </div>
-    </footer>
+      </footer>
   );
 }

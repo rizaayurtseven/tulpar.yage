@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tulparulgen.gazi.edu.tr';
+  const baseUrl = 'https://tulpar.gaziyage.org';
   const currentDate = new Date().toISOString();
 
   const routes = [

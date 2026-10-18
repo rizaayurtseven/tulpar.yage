@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://tulparulgen.gazi.edu.tr/sitemap.xml',
+    sitemap: 'https://tulpar.gaziyage.org/sitemap.xml',
   };
 }

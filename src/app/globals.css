@@ -1,28 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  /* Kullanıcı Paleti: Radar / Hava Savunma / Gece Operasyonu */
-  --bg-main: #07111C;
-  --bg-surface: #0B1826;
-  --bg-card: #102235;
-  --border-main: #1B3A52;
+  /* Arka plan dumanını öne çıkarmak için arayüz tamamen nötr Siyah/Beyaz tonlarda */
+  --background: hsl(0, 0%, 3%);
+  --foreground: hsl(0, 0%, 98%);
 
-  /* Vurgu Mavileri */
-  --color-primary: #42A5F5;
-  --color-bright: #6CC4FF;
+  --card: hsl(0, 0%, 5%);
+  --card-foreground: hsl(0, 0%, 98%);
 
-  /* Tipografi */
-  --text-main: #F2F6FA;
-  --text-muted: #A8B4C2;
+  --popover: hsl(0, 0%, 5%);
+  --popover-foreground: hsl(0, 0%, 98%);
 
-  /* Yan Vurgular */
-  --color-amber: #FBBF24;
-  --color-emerald: #34D399;
+  /* Vurgu Rengi: Keskin Beyaz (Butonlar bembeyaz, yazılar siyah olacak) */
+  --primary: hsl(0, 0%, 98%);
+  --primary-foreground: hsl(0, 0%, 5%);
+
+  --secondary: hsl(0, 0%, 15%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+
+  --muted: hsl(0, 0%, 15%);
+  --muted-foreground: hsl(0, 0%, 65%);
+
+  --accent: hsl(0, 0%, 20%);
+  --accent-foreground: hsl(0, 0%, 98%);
+
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 20%);
+  --ring: hsl(0, 0%, 98%);
+
+  --radius: 0.3rem;
 }
 
-@theme {
-  --color-primary: var(--color-primary);
-  --color-bright: var(--color-bright);
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: var(--radius);
 }
 
 html {
@@ -30,54 +57,14 @@ html {
 }
 
 body {
-  background-color: var(--bg-main);
-  color: var(--text-main);
-  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.7;
-  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Standart Konteyner */
 .site-container {
   width: 100%;
   max-width: 76rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-@media (min-width: 640px) {
-  .site-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .site-container {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-}
-
-/* Kart Hover Stilleri */
-.tech-card {
-  background-color: #102235;
-  border: 1px solid #1B3A52;
-  border-radius: 1rem;
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
-              border-color 0.2s ease;
-}
-
-.tech-card:hover {
-  transform: translateY(-3px);
-  border-color: #42A5F5;
-}
-
-/* Erişilebilir Odak Stilleri */
-a:focus-visible, button:focus-visible {
-  outline: 2px solid #6CC4FF;
-  outline-offset: 3px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
