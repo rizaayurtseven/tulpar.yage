@@ -33,10 +33,33 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-muted-foreground tracking-wide uppercase">
-            <Link href="/#projeler" className="hover:text-foreground transition-colors">Projeler</Link>
-            <Link href="/#ekipler" className="hover:text-foreground transition-colors">Ekip</Link>
-            <Link href="/duyurular" className="hover:text-foreground transition-colors">Duyurular</Link>
-            <Link href="/#paydaslar" className="hover:text-foreground transition-colors">Paydaşlar</Link>
+
+            {/* Projeler - Açılır Menü (Dropdown) */}
+            <div className="relative group py-2">
+              <Link href="/#projeler" className="flex items-center gap-1.5 hover:text-foreground transition-colors">
+                Projeler
+                <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </Link>
+
+              {/* Açılır Kutu */}
+              <div className="absolute top-full left-0 mt-0 w-56 bg-black/95 backdrop-blur-xl border border-white/10 rounded-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col shadow-2xl">
+                {siteData.yarismalar.map((proje) => (
+                    <Link
+                        key={proje.id}
+                        href={`/projeler/${proje.slug}`}
+                        className="px-4 py-3.5 hover:bg-white/10 text-xs text-white/70 hover:text-white uppercase tracking-widest transition-colors border-b border-white/5 last:border-0"
+                    >
+                      {proje.ad}
+                    </Link>
+                ))}
+              </div>
+            </div>
+
+            <Link href="/#ekipler" className="hover:text-foreground transition-colors py-2">Ekip</Link>
+            <Link href="/duyurular" className="hover:text-foreground transition-colors py-2">Duyurular</Link>
+            <Link href="/#paydaslar" className="hover:text-foreground transition-colors py-2">Paydaşlar</Link>
           </nav>
 
           <div className="flex items-center">
