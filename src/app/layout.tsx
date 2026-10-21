@@ -28,14 +28,10 @@ export const metadata: Metadata = {
     description: `${siteData.takim.okul} ${siteData.takim.fakulte} TEKNOFEST Takımı.`,
 };
 
-export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode; }) {
     return (
         <html lang="tr" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
-        <body className="min-h-full flex flex-col bg-[var(--bg-main)] text-[var(--text-main)] selection:bg-zinc-800 selection:text-white">
+        <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground">
         <div className="relative z-10 flex min-h-full flex-col">
             <Navbar />
             <main className="flex-1">{children}</main>

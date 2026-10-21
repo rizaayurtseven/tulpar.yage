@@ -17,47 +17,55 @@ export default function FeatureShaderCards() {
 
     const getIcon = (kategori: string) => {
         const k = kategori.toLowerCase();
-        if (k.includes("hava") || k.includes("ülgen")) return <Shield className="w-10 h-10 text-white" strokeWidth={1.5} />;
-        if (k.includes("roket")) return <Rocket className="w-10 h-10 text-white" strokeWidth={1.5} />;
-        if (k.includes("finans") || k.includes("payna")) return <LineChart className="w-10 h-10 text-white" strokeWidth={1.5} />;
-        return <Shield className="w-10 h-10 text-white" strokeWidth={1.5} />;
+        if (k.includes("hava") || k.includes("ülgen")) return <Shield className="w-8 h-8 text-white" strokeWidth={1.5} />;
+        if (k.includes("roket")) return <Rocket className="w-8 h-8 text-white" strokeWidth={1.5} />;
+        if (k.includes("finans") || k.includes("payna")) return <LineChart className="w-8 h-8 text-white" strokeWidth={1.5} />;
+        return <Shield className="w-8 h-8 text-white" strokeWidth={1.5} />;
     }
 
-    const getTeamUrl = (id: string) => {
-        if (id.includes("ulgen")) return "/projeler/ulgen";
-        if (id.includes("roket")) return "/projeler/roket";
-        if (id.includes("payna")) return "/projeler/payna";
-        return "/#";
+    const getYarismaAdi = (id: string) => {
+        if (id.includes("ulgen")) return "Çelikkubbe Hava Savunma Sistemleri Yarışması";
+        if (id.includes("roket")) return "Orta İrtifa Roket Yarışması";
+        if (id.includes("payna")) return "Finansal Teknolojiler Yarışması";
+        return "";
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {siteData.yarismalar.map((proje, index) => {
                 const shaderConfig = getShaderConfig(index)
                 return (
-                    <Link href={getTeamUrl(proje.id)} key={proje.id} className="relative h-[24rem] group block cursor-pointer">
-                        <div className="absolute inset-0 rounded-xl overflow-hidden border border-white/10">
-                            <Warp style={{ height: "100%", width: "100%" }} {...shaderConfig} scale={1} rotation={0} speed={0.4} />
+                    <Link
+                        href={`/projeler/${proje.slug}`}
+                        key={proje.id}
+                        className="group relative flex flex-col min-h-[26rem] bg-black border border-white/10 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 rounded-xl overflow-hidden"
+                    >
+                        {/* Arka Plan Shader */}
+                        <div className="absolute inset-0">
+                            <Warp style={{ height: "100%", width: "100%" }} {...shaderConfig} scale={1} rotation={0} speed={0.5} />
                         </div>
-                        <div className="relative z-10 p-8 rounded-xl h-full flex flex-col bg-black/40 hover:bg-black/20 transition-all duration-500 border border-white/5">
-                            <div className="mb-6 filter drop-shadow-lg opacity-80 group-hover:opacity-100 transition-opacity">
+
+                        {/* Metin okunaklılığı için karartma katmanı */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80 pointer-events-none" />
+
+                        {/* İçerik */}
+                        <div className="relative z-10 p-8 h-full flex flex-col justify-between">
+                            {/* Üst Kısım: İkon */}
+                            <div className="opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 bg-black/30 p-3 rounded-lg border border-white/5 backdrop-blur-sm w-fit">
                                 {getIcon(proje.kategori)}
                             </div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="text-[10px] font-mono text-white/50 tracking-widest uppercase border border-white/10 px-2 py-1 bg-black/50">
-                                  {proje.kategori}
+
+                            {/* Alt Kısım: Hiyerarşik Metinler */}
+                            <div className="mt-auto pt-8 flex flex-col">
+                                <span className="text-primary font-mono text-xs font-bold tracking-widest uppercase mb-3 drop-shadow-md leading-relaxed">
+                                    {getYarismaAdi(proje.id)}
                                 </span>
-                            </div>
-                            <h3 className="text-2xl font-black mb-4 text-white uppercase tracking-tight group-hover:text-primary transition-colors">
-                                {proje.ad}
-                            </h3>
-                            <p className="leading-relaxed flex-grow text-white/70 font-light text-sm">
-                                {proje.ozet}
-                            </p>
-                            <div className="mt-6 flex flex-wrap gap-2">
-                                {proje.etiketler.map(etiket => (
-                                    <span key={etiket} className="text-[10px] text-white/40 uppercase tracking-widest">#{etiket}</span>
-                                ))}
+                                <h3 className="text-3xl font-black mb-3 text-white uppercase tracking-tight drop-shadow-lg">
+                                    {proje.ad}
+                                </h3>
+                                <p className="text-white/70 font-light text-sm leading-relaxed line-clamp-3 drop-shadow-md">
+                                    {proje.ozet}
+                                </p>
                             </div>
                         </div>
                     </Link>

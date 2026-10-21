@@ -249,8 +249,30 @@ void main() {
 }
 `
 
+const DEFAULT_COLORS = [
+    [0.10196, 0.07843, 0.13725],
+    [0.71764, 0.36470, 0.41176],
+    [0.91764, 0.80392, 0.76078],
+    [1, 0.96078, 0.92156],
+    [1, 0.96078, 0.92156],
+    [1, 0.96078, 0.92156],
+    [1, 0.96078, 0.92156],
+    [1, 0.96078, 0.92156]
+] as [number, number, number][];
+
+// HİÇBİR BEYAZ VEYA AÇIK RENK İÇERMEYEN, SADECE KOYU MOR VE KIRMIZI TONLARI
+const MONOCHROME_COLORS = [
+    [0.05, 0.02, 0.07], // En dip: Ekstra koyu mor/siyah
+    [0.10196, 0.07843, 0.13725], // Orijinal efektin altındaki koyu mor
+    [0.35, 0.15, 0.20], // Orta: Koyu Crimson Kırmızı
+    [0.55, 0.20, 0.25], // En üst: Yumuşatılmış bordo/mor (Asla beyaza kaçmaz)
+    [0.55, 0.20, 0.25],
+    [0.55, 0.20, 0.25],
+    [0.55, 0.20, 0.25],
+    [0.55, 0.20, 0.25]
+] as [number, number, number][];
+
 const UNIFORMS = {
-    colors: [[0.10196078431372549,0.0784313725490196,0.13725490196078433],[0.7176470588235294,0.36470588235294116,0.4117647058823529],[0.9176470588235294,0.803921568627451,0.7607843137254902],[1,0.9607843137254902,0.9215686274509803],[1,0.9607843137254902,0.9215686274509803],[1,0.9607843137254902,0.9215686274509803],[1,0.9607843137254902,0.9215686274509803],[1,0.9607843137254902,0.9215686274509803]] as [number, number, number][],
     colorCount: 4,
     scale: 1.080,
     intensity: 0.620,
@@ -279,11 +301,15 @@ const UNIFORMS = {
 
 const pendingContextReleases = new WeakMap<HTMLCanvasElement, number>()
 
-export function ShaderBackground({ className }: { className?: string }) {
+interface ShaderProps {
+    className?: string;
+    colorVariant?: "default" | "monochrome";
+}
+
+export function ShaderBackground({ className, colorVariant = "default" }: ShaderProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
-        // Burada TypeScript'in kati tiplerini as (casting) ile asiyoruz.
         const canvas = canvasRef.current as HTMLCanvasElement
         if (!canvas) return
 
@@ -333,7 +359,9 @@ export function ShaderBackground({ className }: { className?: string }) {
             cursor: gl.getUniformLocation(program, "u_cursor"),
         }
 
-        gl.uniform3fv(uni.colors, new Float32Array(UNIFORMS.colors.flat()))
+        const activeColors = colorVariant === "monochrome" ? MONOCHROME_COLORS : DEFAULT_COLORS;
+        gl.uniform3fv(uni.colors, new Float32Array(activeColors.flat()))
+
         gl.uniform4f(uni.shape, UNIFORMS.scale, UNIFORMS.intensity, UNIFORMS.paramA, UNIFORMS.warp)
         gl.uniform4f(uni.surface, UNIFORMS.detail, UNIFORMS.contrast, UNIFORMS.brightness, UNIFORMS.saturation)
         gl.uniform4f(uni.finish, UNIFORMS.hue, UNIFORMS.vignette, UNIFORMS.blur, UNIFORMS.grain)
@@ -510,7 +538,7 @@ export function ShaderBackground({ className }: { className?: string }) {
             }, 0)
             pendingContextReleases.set(canvas, releaseTimer)
         }
-    }, [])
+    }, [colorVariant])
 
     return (
         <canvas ref={canvasRef} className={className} style={{ display: "block", width: "100%", height: "100%" }} />

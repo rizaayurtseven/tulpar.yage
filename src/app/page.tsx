@@ -1,153 +1,214 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { siteData } from '../data/site';
 import { ShaderBackground } from '@/components/waves-shader';
 import FeatureShaderCards from '@/components/feature-shader-cards';
-import { Mail, ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar, User } from 'lucide-react';
 
-// Şimdilik takım üyeleri JSON'da olmadığı için buraya bir mockup veri ekliyoruz.
-// Daha sonra bunu JSON'dan çekecek şekilde ayarlayabiliriz.
-const takimUyeleri = [
-    { isim: "Ad Soyad", rol: "Takım Kaptanı", birim: "Yazılım" },
-    { isim: "Ad Soyad", rol: "Aviyonik Sorumlusu", birim: "Elektronik" },
-    { isim: "Ad Soyad", rol: "Yapısal Tasarım", birim: "Mekanik" },
-    { isim: "Ad Soyad", rol: "Algoritma Geliştirici", birim: "Yazılım" },
+const sonDuyurular = [
+    { id: 1, tarih: "12 Ekim 2026", etiket: "TULPAR Ülgen", baslik: "Çelikkubbe HSS Projesi KTR Sonuçları Açıklandı: 96/100", link: "/duyurular" },
+    { id: 2, tarih: "28 Eylül 2026", etiket: "Genel", baslik: "2027 Sezonu İçin Mühendislik Kadrosu Başvuruları Başladı", link: "/basvuru" },
+    { id: 3, tarih: "15 Eylül 2026", etiket: "TULPAR Payna", baslik: "Finansal Teknolojiler Yarışması Proje Lansmanı Gerçekleşti", link: "/duyurular" }
+];
+
+const genelKaptan = {
+    isim: "İSİM SOYİSİM",
+    rol: "Genel Koordinatör",
+    foto: ""
+};
+
+const takimKaptanlari = [
+    { isim: "İSİM SOYİSİM", rol: "TULPAR Ülgen Kaptanı" },
+    { isim: "İSİM SOYİSİM", rol: "TULPAR Roket Kaptanı" },
+    { isim: "İSİM SOYİSİM", rol: "TULPAR Payna Kaptanı" },
 ];
 
 export default function HomePage() {
     return (
-        <div className="relative w-full flex flex-col">
+        <div className="relative w-full flex flex-col min-h-screen bg-transparent">
 
-            <div className="fixed inset-0 -z-20 bg-background">
-                <ShaderBackground className="h-full w-full" />
+            {/* 1. SABİT MONOKROM ARKA PLAN */}
+            <div className="fixed inset-0 -z-30">
+                <ShaderBackground colorVariant="monochrome" className="h-full w-full opacity-100" />
             </div>
-            <div className="fixed inset-0 -z-10 bg-black/70" />
+
+            {/* İnce karartma filtresi */}
+            <div className="fixed inset-0 -z-20 bg-black/40 pointer-events-none" />
+
+            {/* 2. HERO İÇİN ÇOK RENKLİ ARKA PLAN */}
+            <div
+                className="absolute top-0 left-0 w-full h-[120vh] -z-10 pointer-events-none"
+                style={{
+                    maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)'
+                }}
+            >
+                <ShaderBackground colorVariant="default" className="h-full w-full opacity-100" />
+            </div>
 
             <div className="relative z-10 flex flex-col w-full">
 
-                {/* HERO */}
-                <section className="relative w-full min-h-screen flex items-center justify-center pt-20 pb-10">
-                    <div className="site-container flex flex-col items-center text-center">
-                        <div className="px-4 py-1.5 border border-white/20 bg-black/40 backdrop-blur-md text-white/80 text-xs font-mono tracking-[0.2em] uppercase mb-8">
+                {/* 1. HERO BÖLÜMÜ */}
+                <section className="relative w-full min-h-[95vh] flex items-center justify-center pt-20 pb-12">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.6)_0%,transparent_60%)] pointer-events-none z-0" />
+
+                    <div className="site-container relative z-10 flex flex-col items-center text-center">
+                        <span className="text-white/80 text-xs font-mono tracking-widest uppercase mb-6 px-4 py-1.5 border border-white/20 bg-black/40 backdrop-blur-md rounded-sm shadow-lg">
                             {siteData.takim.okul}
-                        </div>
+                        </span>
                         <h1 className="text-7xl sm:text-8xl md:text-[11rem] font-black text-white tracking-tighter uppercase leading-[0.85] drop-shadow-2xl">
                             {siteData.takim.ad}
                         </h1>
-                        <p className="text-lg sm:text-xl md:text-2xl text-white/90 font-light tracking-widest mt-8 drop-shadow-lg">
+                        <h2 className="text-xl sm:text-3xl md:text-4xl text-white font-bold tracking-wider mt-8 uppercase drop-shadow-xl">
                             {siteData.takim.tamAd}
-                        </p>
-                        <p className="text-sm md:text-base text-white/60 max-w-xl mt-4 font-normal tracking-wide drop-shadow-md">
-                            Hava Savunma ve Orta İrtifa Roket sistemleri geliştiren mühendislik ekibi.
+                        </h2>
+                        <p className="text-base md:text-lg text-white/80 max-w-xl mt-6 font-light tracking-wide leading-relaxed drop-shadow-lg">
+                            Hava Savunma, Roket ve Finansal Teknolojiler alanlarında otonom projeler geliştiren mühendislik ekibi.
                         </p>
                     </div>
                 </section>
 
-                {/* PROJELER (Akışkan Shader Kartları) */}
-                <section id="projeler" className="w-full py-32 border-t border-white/10 bg-black/20 backdrop-blur-sm">
+                {/* 2. PROJELER */}
+                <section id="projeler" className="w-full py-24 bg-transparent">
                     <div className="site-container">
-                        <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase mb-16">
-                            Projeler
-                        </h2>
+                        <div className="mb-12 text-center md:text-left">
+                            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase">
+                                Projeler
+                            </h2>
+                        </div>
                         <FeatureShaderCards />
                     </div>
                 </section>
 
-                {/* EKİPLER (Kişi Kartları) */}
-                <section id="ekipler" className="w-full py-32 border-t border-white/10 bg-black/60 backdrop-blur-md">
+                {/* 3. DUYURULAR */}
+                <section id="duyurular" className="w-full py-24 bg-black/40 backdrop-blur-sm">
                     <div className="site-container">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                            <h2 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase">
-                                Mühendislik<br />Kadrosu
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+                            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tighter uppercase">
+                                Son Duyurular
                             </h2>
-                            <p className="text-white/50 max-w-sm text-sm font-light">
-                                Disiplinler arası çalışan, algoritma, aviyonik ve mekanik alanlarında uzmanlaşmış ana operasyon ekibi.
-                            </p>
+                            <Link href="/duyurular" className="text-sm font-mono text-white/50 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-2">
+                                Tümünü Gör <ArrowRight className="w-4 h-4" />
+                            </Link>
                         </div>
 
-                        {/* Kişi Grid Tasarımı */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {takimUyeleri.map((uye, i) => (
-                                <div key={i} className="group relative overflow-hidden border border-white/10 bg-black">
-                                    {/* Fotoğraf Placeholder (Gerçek fotoğraflar eklenene kadar monokrom doku) */}
-                                    <div className="aspect-[3/4] bg-white/5 relative grayscale group-hover:grayscale-0 transition-all duration-500">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                                        {/* İleride buraya Image bileşeni gelecek */}
+                        <div className="flex flex-col gap-3">
+                            {sonDuyurular.map((duyuru) => (
+                                <Link
+                                    href={duyuru.link}
+                                    key={duyuru.id}
+                                    className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-8 p-5 bg-white/[0.03] border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all rounded-lg"
+                                >
+                                    <div className="flex items-center gap-2 text-white/40 text-sm font-mono shrink-0 w-36">
+                                        <Calendar className="w-4 h-4" />
+                                        {duyuru.tarih}
                                     </div>
-
-                                    <div className="absolute bottom-0 left-0 w-full p-6 translate-y-2 group-hover:translate-y-0 transition-transform">
-                    <span className="text-[10px] font-mono text-white/50 tracking-widest uppercase mb-1 block">
-                      {uye.birim}
-                    </span>
-                                        <h3 className="text-lg font-bold text-white uppercase tracking-wide">
-                                            {uye.isim}
-                                        </h3>
-                                        <p className="text-xs text-white/70 mt-1">
-                                            {uye.rol}
-                                        </p>
+                                    <div className="px-3 py-1 bg-white/5 text-primary text-[10px] uppercase tracking-widest font-mono rounded-sm w-fit shrink-0">
+                                        {duyuru.etiket}
                                     </div>
-                                </div>
+                                    <h3 className="text-base md:text-lg font-semibold text-white/90 group-hover:text-white transition-colors">
+                                        {duyuru.baslik}
+                                    </h3>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* PAYDAŞLAR (Merkezi Dev Logolar) */}
-                <section id="paydaslar" className="w-full py-40 border-t border-white/10 bg-black/40 backdrop-blur-sm">
+                {/* 4. EKİP - Temiz ve Hiyerarşik Tasarım */}
+                <section id="ekipler" className="w-full py-24 bg-black/20">
+                    <div className="site-container">
+                        <div className="flex flex-col mb-16 text-center">
+                            <h2 className="text-4xl font-black text-white tracking-tighter uppercase">
+                                Takım Sorumluları
+                            </h2>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-16 max-w-4xl mx-auto">
+
+                            {/* Genel Kaptan (Büyük) */}
+                            <div className="flex flex-col items-center text-center group">
+                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-white/10 group-hover:border-primary/50 transition-colors overflow-hidden relative bg-black/50 mb-6 flex items-center justify-center">
+                                    {genelKaptan.foto ? (
+                                        <Image src={genelKaptan.foto} alt={genelKaptan.isim} fill className="object-cover" />
+                                    ) : (
+                                        <User className="w-12 h-12 text-white/20" strokeWidth={1.5} />
+                                    )}
+                                </div>
+                                <h3 className="text-2xl font-bold text-white uppercase tracking-wide">
+                                    {genelKaptan.isim}
+                                </h3>
+                                <p className="text-primary font-mono text-sm tracking-widest uppercase mt-2">
+                                    {genelKaptan.rol}
+                                </p>
+                            </div>
+
+                            {/* Alt Ekip Kaptanları (Yan yana daha küçük) */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
+                                {takimKaptanlari.map((uye, i) => (
+                                    <div key={i} className="flex flex-col items-center text-center group">
+                                        <div className="w-24 h-24 rounded-full border-2 border-white/5 group-hover:border-primary/50 transition-colors overflow-hidden relative bg-black/50 mb-5 flex items-center justify-center">
+                                            <User className="w-8 h-8 text-white/20" strokeWidth={1.5} />
+                                        </div>
+                                        <h4 className="text-lg font-bold text-white uppercase tracking-wide">
+                                            {uye.isim}
+                                        </h4>
+                                        <p className="text-xs text-white/50 mt-1 uppercase tracking-widest font-mono">
+                                            {uye.rol}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                {/* 5. PAYDAŞLAR - Boşluklar Azaltıldı */}
+                <section id="paydaslar" className="w-full py-20 bg-transparent">
                     <div className="site-container flex flex-col items-center text-center">
-                        <h2 className="text-sm font-mono text-white/40 tracking-[0.3em] uppercase mb-16">
+                        <h2 className="text-sm font-mono text-white/50 tracking-[0.3em] uppercase mb-12">
                             Destekleyen Kurumlar
                         </h2>
 
-                        <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32">
+                        <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-12 opacity-80 hover:opacity-100 transition-opacity duration-500">
                             {siteData.paydaslar.map((paydas) => (
                                 <a
                                     key={paydas.id}
                                     href={paydas.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group relative flex flex-col items-center opacity-60 hover:opacity-100 transition-opacity duration-300"
+                                    className="relative w-36 h-20 md:w-44 md:h-24 grayscale brightness-0 invert opacity-60 hover:opacity-100 transition-all duration-300"
+                                    aria-label={paydas.ad}
                                 >
-                                    <div className="relative w-32 h-32 md:w-48 md:h-48 mb-6 grayscale brightness-0 invert">
-                                        <Image
-                                            src={paydas.logo}
-                                            alt={paydas.ad}
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <span className="text-white font-bold tracking-widest uppercase text-sm md:text-base">
-                    {paydas.ad}
-                  </span>
+                                    <Image
+                                        src={paydas.logo}
+                                        alt={paydas.ad}
+                                        fill
+                                        className="object-contain"
+                                    />
                                 </a>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* İLETİŞİM (Minimalist & Mail Odaklı) */}
-                <section id="iletisim" className="w-full py-40 border-t border-white/10 bg-black">
+                {/* 6. İLETİŞİM - Sade Kapanış */}
+                <section id="iletisim" className="w-full py-24 bg-black/60 backdrop-blur-lg">
                     <div className="site-container flex flex-col items-center text-center">
-
-                        <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center mb-10 text-white/80">
-                            <Mail className="w-6 h-6" />
-                        </div>
-
-                        <h2 className="text-3xl md:text-4xl font-light text-white mb-6">
-                            Bir projeniz mi var?
-                        </h2>
-
+                        <p className="text-xl font-light text-white/50 mb-6">
+                            Sponsorluk Görüşmeleri ve Ortaklıklar İçin
+                        </p>
                         <a
-                            href="mailto:iletisim@tulparulgen.gazi.edu.tr"
-                            className="group text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter flex items-center gap-4 hover:text-white/80 transition-colors break-all"
+                            href={`mailto:${siteData.iletisim.eposta}`}
+                            className="group flex items-center justify-center gap-4 text-5xl md:text-7xl font-black text-white hover:text-primary transition-colors"
                         >
                             BİZE YAZIN
-                            <ArrowRight className="w-10 h-10 md:w-16 md:h-16 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+                            <ArrowRight className="w-10 h-10 md:w-16 md:h-16 -rotate-45 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-300" />
                         </a>
-
-                        <div className="mt-20 text-white/40 font-mono text-sm tracking-widest uppercase">
-                            iletisim@tulparulgen.gazi.edu.tr
+                        <div className="mt-12 text-lg text-white/80 font-mono tracking-widest">
+                            {siteData.iletisim.eposta}
                         </div>
-
                     </div>
                 </section>
 

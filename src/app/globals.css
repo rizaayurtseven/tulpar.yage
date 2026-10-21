@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Arka plan dumanını öne çıkarmak için arayüz tamamen nötr Siyah/Beyaz tonlarda */
   --background: hsl(0, 0%, 3%);
   --foreground: hsl(0, 0%, 98%);
 
@@ -11,9 +10,8 @@
   --popover: hsl(0, 0%, 5%);
   --popover-foreground: hsl(0, 0%, 98%);
 
-  /* Vurgu Rengi: Keskin Beyaz (Butonlar bembeyaz, yazılar siyah olacak) */
-  --primary: hsl(0, 0%, 98%);
-  --primary-foreground: hsl(0, 0%, 5%);
+  --primary: hsl(350, 75%, 45%);
+  --primary-foreground: hsl(0, 0%, 98%);
 
   --secondary: hsl(0, 0%, 15%);
   --secondary-foreground: hsl(0, 0%, 98%);
@@ -24,9 +22,9 @@
   --accent: hsl(0, 0%, 20%);
   --accent-foreground: hsl(0, 0%, 98%);
 
-  --border: hsl(0, 0%, 20%);
-  --input: hsl(0, 0%, 20%);
-  --ring: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 15%);
+  --input: hsl(0, 0%, 15%);
+  --ring: hsl(350, 75%, 45%);
 
   --radius: 0.3rem;
 }
